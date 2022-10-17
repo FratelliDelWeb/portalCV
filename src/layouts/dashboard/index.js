@@ -34,9 +34,20 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+import React, { useState, useEffect } from "react";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
+
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8080/api/clienti")
+      .then((response) => response.json())
+      .then((data) => {
+        setPosts(data);
+      })
+      .catch((err) => err);
+  }, []);
 
   return (
     <DashboardLayout>
@@ -155,6 +166,9 @@ function Dashboard() {
           </Grid>
         </MDBox>
       </MDBox>
+      {posts.map((row) => (
+        <div>{row.Denominazione}</div>
+      ))}
       <Footer />
     </DashboardLayout>
   );

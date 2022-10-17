@@ -2,6 +2,7 @@
   "name": "material-dashboard-2-react",
   "version": "2.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "author": "Creative Tim",
   "license": "See license in https://www.creative-tim.com/license",
   "description": "React version of Material Dashboard 2 by Creative Tim",
@@ -17,6 +18,7 @@
     "npm": ">=6"
   },
   "dependencies": {
+    "2": "^3.0.0",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
@@ -28,21 +30,26 @@
     "@testing-library/user-event": "13.5.0",
     "chart.js": "3.4.1",
     "chroma-js": "2.4.2",
+    "fsevents": "^2.2.2",
+    "npm": "^8.19.2",
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-chartjs-2": "3.0.4",
     "react-dom": "17.0.2",
     "react-github-btn": "1.2.1",
     "react-router-dom": "6.2.1",
-    "react-scripts": "5.0.0",
+    "react-scripts": "^5.0.1",
     "react-table": "7.7.0",
     "stylis": "4.0.13",
     "stylis-plugin-rtl": "2.1.1",
     "web-vitals": "2.1.4",
+    "yargs": "^17.6.0",
+    "yarn": "^1.22.19",
     "yup": "0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start && (cd server & npm run start)",
+    "dev": "concurrently \"npm run start\" \"cd server && npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -67,7 +74,7 @@
     ]
   },
   "devDependencies": {
-    "eslint": "8.8.0",
+    "concurrently": "^7.4.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.4",
