@@ -16,6 +16,8 @@ Coded by www.creative-tim.com
 */
 
 // Material Dashboard 2 React components
+import React, { useState, useEffect } from "react";
+
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
@@ -47,7 +49,19 @@ export default function data() {
       <MDTypography variant="caption">{description}</MDTypography>
     </MDBox>
   );
-
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8080/api/clienti")
+      .then((response) => response.json())
+      .then((x) => {
+        setPosts(x);
+      })
+      .catch((err) => err);
+  }, []);
+  const variabile = posts;
+  console.log(posts);
+  console.log(variabile);
+  console.log(variabile.lengh);
   return {
     columns: [
       { Header: "author", accessor: "author", width: "45%", align: "left" },

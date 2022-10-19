@@ -30,7 +30,6 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
@@ -49,6 +48,11 @@ function Dashboard() {
       .catch((err) => err);
   }, []);
 
+  const variabile = posts.length;
+  console.log(posts);
+  console.log(variabile);
+  console.log(variabile.length);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -60,7 +64,7 @@ function Dashboard() {
                 color="dark"
                 icon="weekend"
                 title="Bookings"
-                count={281}
+                count={variabile}
                 percentage={{
                   color: "success",
                   amount: "+55%",
@@ -72,7 +76,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="leaderboard"
+                icon="settings_accessibility"
                 title="Today's Users"
                 count="2,300"
                 percentage={{
@@ -103,12 +107,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Followers"
-                count="+91"
+                title="Clienti"
+                count={variabile}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "Just updated",
+                  label: "UltimiAggiornati",
                 }}
               />
             </MDBox>
