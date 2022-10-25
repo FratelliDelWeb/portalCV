@@ -43,8 +43,26 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  // Simple POST request with a JSON body using fetch
+  const [posts4, setState] = useState([]);
+
+  function doLogin() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    };
+    fetch("http://localhost:5000/api/auth/login", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setState({ postId: data.id }));
+    console.log(username);
+    console.log(password);
+    console.log(posts4);
+  }
 
   return (
     <BasicLayout image={bgImage}>
@@ -84,10 +102,20 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                onChange={(e) => setUserName(e.target.value)}
+                fullWidth
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -102,7 +130,14 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                color="info"
+                fullWidth
+                onClick={() => {
+                  doLogin();
+                }}
+              >
                 sign in
               </MDButton>
             </MDBox>
