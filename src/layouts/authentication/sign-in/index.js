@@ -56,7 +56,7 @@ function Basic() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     };
-    fetch("http://localhost:5000/api/auth/login", requestOptions)
+    fetch("/api/auth/login", requestOptions)
       .then((response) => response.json())
       .then((data) => setState({ postId: data.id }));
     console.log(username);
