@@ -25,7 +25,6 @@ exports.adminAuth = (req, res, next) => {
 
 
 exports.userAuth = (req, res, next) => {
-    console.log(JWT)
     const token = req.cookies.jwt
     if (token) {
       jwt.verify(token, jwtSecret, (err, decodedToken) => {
