@@ -58,10 +58,12 @@ function Basic() {
     };
     fetch("/api/auth/login", requestOptions)
       .then((response) => response.json())
-      .then((data) => setState({ postId: data.id }));
+      .then((data) => setState({ user: data.user }));
     console.log(username);
     console.log(password);
     console.log(posts4);
+    const navigate = useNavigate();
+    navigate("/basic/" + posts4.user);
   }
 
   return (

@@ -44,6 +44,8 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import Basic from "layouts/basic";
+import Admin from "layouts/admin";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -112,6 +114,22 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+  },
+  {
+    type: "collapse",
+    name: "basic",
+    key: "admin",
+    icon: <Icon fontSize="small">Basic</Icon>,
+    route: "/basic",
+    component: <Basic />,
+  },
+  {
+    type: "collapse",
+    name: "admin",
+    key: "admin",
+    icon: <Icon fontSize="small">Admin</Icon>,
+    route: "/admin",
+    component: <Admin />,
   },
 ];
 
