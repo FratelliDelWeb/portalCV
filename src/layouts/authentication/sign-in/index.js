@@ -35,6 +35,7 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { useEffect } from "react";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -45,6 +46,8 @@ function Basic() {
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   // Simple POST request with a JSON body using fetch
   const [posts4, setState4] = useState([]);
+  const [postsbasic, setBasic] = useState([]);
+
   const linkToLogin = "/#";
   let staus = 0;
   function doLogin() {
@@ -53,6 +56,7 @@ function Basic() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     };
+
     fetch("/api/auth/login", requestOptions)
       .then((response) => {
         response.json();
@@ -63,16 +67,36 @@ function Basic() {
       .then((data) => {
         console.log(data);
         setState4(data);
-        if (staus === 201) {
+        /* if (staus === 201) {
           navigate(`/dashboard`);
         } else {
           navigate(`authentication/sign-in`);
-        }
+        } */
+        fetch("/basic")
+          .then((response) => {
+            response.json();
+            staus = response.status;
+            console.log(response);
+            console.log(staus);
+          })
+          .then((x) => {
+            setBasic(x);
+            console.log(postsbasic);
+            if (staus === 201 || staus === 200) {
+              navigate(`/dashboard`);
+            } else {
+              navigate(`authentication/sign-in`);
+            }
+          })
+          .catch((err) => {
+            console.log(err.message);
+            navigate(`authentication/sign-in`);
+          });
       })
-      .catch((data) => {
-        console.log(data.message);
-        navigate(`authentication/sign-in`);
+      .catch((err) => {
+        console.log(err.message);
       });
+
     console.log(username);
     console.log(password);
     console.log(posts4);
