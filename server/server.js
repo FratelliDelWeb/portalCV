@@ -25,8 +25,10 @@ app.use('/api', router);
 
 app.get('/api/users', require("./api/Users/route"));
 app.get('/api/users/:id', require("./api/Users/route"));
-app.get('/api/clienti', require("./api/Clienti/route"));
-app.get('/api/clienti/:id', require("./api/Clienti/route"));
+app.get('/api/clienti', clientsRoute);
+app.get('/api/clienti/:id', clientsRoute);
+app.post('/api/search/clients', clientsRoute);
+
 app.get("/admin", adminAuth, (req, res) => res.send({
   canAccess : true
 }));
