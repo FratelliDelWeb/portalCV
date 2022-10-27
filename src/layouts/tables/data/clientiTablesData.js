@@ -5,7 +5,7 @@ import MDTypography from "components/MDTypography";
 export default function TableData() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/api/clienti")
+    fetch("api/clienti")
       .then((response) => response.json())
       .then((x) => {
         setPosts(x);

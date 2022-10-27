@@ -17,6 +17,7 @@ import { useState } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -39,11 +40,13 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   // Simple POST request with a JSON body using fetch
-  const [posts4, setState] = useState([]);
-
+  const [posts4, setState4] = useState([]);
+  const linkToLogin = "/#";
+  let staus = 0;
   function doLogin() {
     const requestOptions = {
       method: "POST",
@@ -51,15 +54,29 @@ function Basic() {
       body: JSON.stringify({ username, password }),
     };
     fetch("/api/auth/login", requestOptions)
-      .then((response) => response.json())
-      .then((data) => setState({ user: data.user }));
+      .then((response) => {
+        response.json();
+        staus = response.status;
+        console.log(response);
+        console.log(staus);
+      })
+      .then((data) => {
+        console.log(data);
+        setState4(data);
+        if (staus === 201) {
+          navigate(`/dashboard`);
+        } else {
+          navigate(`authentication/sign-in`);
+        }
+      })
+      .catch((data) => {
+        console.log(data.message);
+        navigate(`authentication/sign-in`);
+      });
     console.log(username);
     console.log(password);
     console.log(posts4);
-    const navigate = useNavigate();
-    navigate("/basic/" + posts4.user);
   }
-
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -75,18 +92,12 @@ function Basic() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-          ACCEDI
+            ACCEDI
           </MDTypography>
           <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-             
-            </Grid>
-            <Grid item xs={2}>
-           
-            </Grid>
-            <Grid item xs={2}>
-            
-            </Grid>
+            <Grid item xs={2} />
+            <Grid item xs={2} />
+            <Grid item xs={2} />
           </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
@@ -127,9 +138,14 @@ function Basic() {
                 onClick={() => {
                   doLogin();
                 }}
+                to={linkToLogin}
               >
-              Accedi
+                Accedi
               </MDButton>
+
+              <MDBox>
+                <MDTypography> ciao</MDTypography>
+              </MDBox>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
