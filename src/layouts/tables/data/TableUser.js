@@ -20,19 +20,17 @@ export default function TableUser() {
 
   if (posts.length > 0) {
     for (let x = 0; x < posts.length; x += 1) {
-      if (posts[x].DataRichiamo !== "") {
+      if (posts[x].Telefono1 !== "") {
         baseDatiUser[x] = {
           codiceCliente: posts[x].CodiceCliente,
           name: posts[x].Denominazione,
           position: posts[x].Indirizzo + posts[x].Località,
           telefono: posts[x].Telefono1,
-          DataRichiamo: posts[x].DataRichiamo,
+          Email: posts[x].Email,
+          Note: posts[x].Note,
         };
-        console.log(baseDatiUser);
       }
     }
-
-    console.log(baseDatiUser);
   }
   return (
     <DataTable
@@ -42,7 +40,8 @@ export default function TableUser() {
           { Header: "Nome", accessor: "name", width: "13%" },
           { Header: "Indirizzo", accessor: "position", width: "30%" },
           { Header: "Telefono", accessor: "telefono", width: "30%" },
-          { Header: "DataRichiamo", accessor: "DataRichiamo", width: "12%" },
+          { Header: "Email", accessor: "Email", width: "30%" },
+          { Header: "NOTE", accessor: "Note", width: "30%" },
         ],
         rows: baseDatiUser,
       }}
