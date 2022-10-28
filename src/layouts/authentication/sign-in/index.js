@@ -35,7 +35,6 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import { useEffect } from "react";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
@@ -50,6 +49,7 @@ function Basic() {
 
   const linkToLogin = "/#";
   let staus = 0;
+
   function doLogin() {
     const requestOptions = {
       method: "POST",
@@ -59,10 +59,10 @@ function Basic() {
 
     fetch("/api/auth/login", requestOptions)
       .then((response) => {
+        console.log(response);
         response.json();
         staus = response.status;
         console.log(response);
-        console.log(staus);
       })
       .then((data) => {
         console.log(data);
@@ -168,7 +168,7 @@ function Basic() {
               </MDButton>
 
               <MDBox>
-                <MDTypography> ciao</MDTypography>
+                <MDTypography> </MDTypography>
               </MDBox>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

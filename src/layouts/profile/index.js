@@ -19,9 +19,6 @@ import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import InstagramIcon from "@mui/icons-material/Instagram";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -31,35 +28,27 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 import ProfilesList from "examples/Lists/ProfilesList";
-import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
-import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 // Data
-import profilesListData from "layouts/profile/data/profilesListData";
 
 // Images
-import homeDecor1 from "assets/images/home-decor-1.jpg";
-import homeDecor2 from "assets/images/home-decor-2.jpg";
-import homeDecor3 from "assets/images/home-decor-3.jpg";
-import homeDecor4 from "assets/images/home-decor-4.jpeg";
-import team1 from "assets/images/team-1.jpg";
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
+
 import React, { useState, useEffect } from "react";
 
 function Overview() {
-  const [users, setUsers] = useState([]);
+  const [users, setUser] = useState([]);
+  const [usersx, setUsers] = useState([]);
   const baseDatiUser = [];
+  const baseDatiUsers = [];
   useEffect(() => {
     fetch("api/users")
       .then((response) => response.json())
       .then((x) => {
+        setUser(x);
         setUsers(x);
         console.log(users);
       })
@@ -71,7 +60,7 @@ function Overview() {
   console.log(variabile.lengh);
 
   if (users.length > 0) {
-    for (let x = 0; x < 1; x += 1) {
+    for (let x = 0; x < users.length; x += 1) {
       baseDatiUser[x] = {
         username: users[x].username,
         professione: users[x].professione,
@@ -82,6 +71,22 @@ function Overview() {
       };
     }
     console.log(baseDatiUser);
+  }
+  if (usersx.length > 0) {
+    for (let x = 0; x < usersx.length; x += 1) {
+      baseDatiUsers[x] = {
+        image: usersx[x].email,
+        name: usersx[x].username,
+        description: usersx[x].professione,
+        action: {
+          type: "internal",
+          route: `/profile/${usersx[x]._id}`,
+          color: "info",
+          label: " APRI",
+        },
+      };
+    }
+    console.log(baseDatiUsers);
   }
 
   return (
@@ -112,17 +117,17 @@ function Overview() {
                   >
                     {item.username}
                   </MDTypography>
-                  <MDTypography display="block" lineHeight={1.25}  fontWeight="regular" variant="h6">
+                  <MDTypography display="block" lineHeight={1.25} fontWeight="regular" variant="h6">
                     {item.professione}
                   </MDTypography>
-                  <MDTypography display="block" lineHeight={1.25}  fontWeight="regular" variant="h6">
+                  <MDTypography display="block" lineHeight={1.25} fontWeight="regular" variant="h6">
                     {item.email}
                   </MDTypography>
                 </MDBox>
               ))}
             </Grid>
             <Grid item xs={12} xl={4}>
-              <ProfilesList title="conversations" profiles={profilesListData} shadow={false} />
+              <ProfilesList title="conversations" profiles={baseDatiUsers} shadow={false} />
             </Grid>
           </Grid>
         </MDBox>
@@ -137,88 +142,7 @@ function Overview() {
           </MDBox>
         </MDBox>
         <MDBox p={2}>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={6} xl={3}>
-              <DefaultProjectCard
-                image={homeDecor1}
-                label="project #2"
-                title="modern"
-                description="As Uber works through a huge amount of internal management turmoil."
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                authors={[
-                  { image: team1, name: "Elena Morison" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team4, name: "Peterson" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <DefaultProjectCard
-                image={homeDecor2}
-                label="project #1"
-                title="scandinavian"
-                description="Music is something that everyone has their own specific opinion about."
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                authors={[
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team4, name: "Peterson" },
-                  { image: team1, name: "Elena Morison" },
-                  { image: team2, name: "Ryan Milly" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <DefaultProjectCard
-                image={homeDecor3}
-                label="project #3"
-                title="minimalist"
-                description="Different people have different taste, and various types of music."
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                authors={[
-                  { image: team4, name: "Peterson" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team1, name: "Elena Morison" },
-                ]}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <DefaultProjectCard
-                image={homeDecor4}
-                label="project #4"
-                title="gothic"
-                description="Why would anyone pick blue over pink? Pink is obviously a better color."
-                action={{
-                  type: "internal",
-                  route: "/pages/profile/profile-overview",
-                  color: "info",
-                  label: "view project",
-                }}
-                authors={[
-                  { image: team4, name: "Peterson" },
-                  { image: team3, name: "Nick Daniel" },
-                  { image: team2, name: "Ryan Milly" },
-                  { image: team1, name: "Elena Morison" },
-                ]}
-              />
-            </Grid>
-          </Grid>
+          <Grid container spacing={6} />
         </MDBox>
       </Header>
       <Footer />

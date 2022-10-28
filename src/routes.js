@@ -39,7 +39,6 @@ Coded by www.creative-tim.com
 import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import Billing from "layouts/billing";
-import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
@@ -77,14 +76,6 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "RTL",
-    key: "rtl",
-    icon: <Icon fontSize="small">format_textdirection_r_to_l</Icon>,
-    route: "/rtl",
-    component: <RTL />,
-  },
-  {
-    type: "collapse",
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
@@ -97,6 +88,14 @@ const routes = [
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
+    component: <Profile />,
+  },
+  {
+    type: "title",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile/:id",
     component: <Profile />,
   },
   {
@@ -116,7 +115,7 @@ const routes = [
     component: <SignUp />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "basic",
     key: "admin",
     icon: <Icon fontSize="small">Basic</Icon>,
@@ -124,7 +123,7 @@ const routes = [
     component: <Basic />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "admin",
     key: "admin",
     icon: <Icon fontSize="small">Admin</Icon>,
