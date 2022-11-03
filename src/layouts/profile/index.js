@@ -48,30 +48,16 @@ function Overview() {
     fetch("api/users")
       .then((response) => response.json())
       .then((x) => {
-        setUser(x);
         setUsers(x);
-        console.log(users);
+        console.log(usersx);
       })
       .catch((err) => err);
   }, []);
-  const variabile = users;
-  console.log(users[0]);
+  const variabile = usersx;
+  console.log(usersx);
   console.log(variabile);
   console.log(variabile.lengh);
 
-  if (users.length > 0) {
-    for (let x = 0; x < users.length; x += 1) {
-      baseDatiUser[x] = {
-        username: users[x].username,
-        professione: users[x].professione,
-        // eslint-disable-next-line no-underscore-dangle
-        email: users[x].email,
-        // eslint-disable-next-line no-underscore-dangle
-        role: users[x].role,
-      };
-    }
-    console.log(baseDatiUser);
-  }
   if (usersx.length > 0) {
     for (let x = 0; x < usersx.length; x += 1) {
       baseDatiUsers[x] = {
@@ -89,6 +75,31 @@ function Overview() {
     console.log(baseDatiUsers);
   }
 
+
+  
+ /*  useEffect(() => {
+    fetch(`api/users/${window.localStorage.getItem("token")}`)
+      .then((response) => response.json())
+      .then((x) => {
+        setUser(x);
+
+        console.log("persu2", users);
+      })
+      .catch((err) => err);
+  }, []);
+  if (users.length > 0) {
+    for (let x = 0; x < users.length; x += 1) {
+      baseDatiUser[x] = {
+        username: users[x].name,
+
+        // eslint-disable-next-line no-underscore-dangle
+        email: users[x].email,
+        // eslint-disable-next-line no-underscore-dangle
+        role: users[x].description,
+      };
+    }
+    console.log(baseDatiUser);
+  } */
   return (
     <DashboardLayout>
       <DashboardNavbar />

@@ -49,6 +49,15 @@ function Footer({ light }) {
             flexWrap="wrap"
             color={light ? "white" : "text"}
             fontSize={size.sm}
+          />
+          <MDBox
+            component="ul"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+            color={light ? "white" : "text"}
+            fontSize={size.sm}
           >
             &copy; {new Date().getFullYear()}, made with
             <MDBox fontSize={size.md} color={light ? "white" : "dark"} mb={-0.5} mx={0.25}>
@@ -63,25 +72,6 @@ function Footer({ light }) {
               </MDTypography>
             </Link>
             for a better web.
-          </MDBox>
-          <MDBox
-            component="ul"
-            sx={({ breakpoints }) => ({
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "center",
-              listStyle: "none",
-              mt: 3,
-              mb: 0,
-              p: 0,
-
-              [breakpoints.up("lg")]: {
-                mt: 0,
-              },
-            })}
-          >
-            
           </MDBox>
         </MDBox>
       </Container>

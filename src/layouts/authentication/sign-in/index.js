@@ -13,16 +13,13 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { Component } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
+
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -34,163 +31,150 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import bgImage from "assets/images/BG-LOGIN-MIRABILIA.jpg";
 
-function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
-  const navigate = useNavigate();
-
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
-  // Simple POST request with a JSON body using fetch
-  const [posts4, setState4] = useState([]);
-  const [postsbasic, setBasic] = useState([]);
-
-  const linkToLogin = "/#";
-  let staus = 0;
-
-  function doLogin() {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+export default class Basic extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      usename: "",
+      password: "",
+      stato: false,
     };
+    this.handeledSubmit = this.handeledSubmit.bind(this);
+  }
 
-    fetch("/api/auth/login", requestOptions)
-      .then((response) => {
-        console.log(response);
-        response.json();
-        staus = response.status;
-        console.log(response);
-      })
+  // Simple POST request with a JSON body using fetch
+  /*    [posts4, setState4] = useState([]);
+   [postsbasic, setBasic] = useState([]); */
+
+  /*  linkToLogin = "/#";
+   staus = 0; */
+
+  handeledSubmit(e) {
+    e.preventDefault();
+    const { username, password } = this.state;
+    console.log(username, password);
+    fetch("/api/auth/login", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
+      .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        setState4(data);
-        /* if (staus === 201) {
-          navigate(`/dashboard`);
-        } else {
-          navigate(`authentication/sign-in`);
-        } */
-        fetch("/basic")
-          .then((response) => {
+        console.log(data, "userRegister");
+        if (data.message === "User successfully Logged in") {
+          alert("login successful");
+          window.localStorage.setItem("token", data.user);
+        }
+        if (data.role !== "admin") {
+          fetch("/basic").then((response) => {
             response.json();
-            staus = response.status;
+            const staus = response.status;
             console.log(response);
             console.log(staus);
-          })
-          .then((x) => {
-            setBasic(x);
-            console.log(postsbasic);
-            if (staus === 201 || staus === 200) {
-              navigate(`/dashboard`);
+            if (staus === 200 || staus === 201) {
+              window.location.href = "/dashboard";
             } else {
-              navigate(`authentication/sign-in`);
+              alert("Nome o password errati");
             }
-          })
-          .catch((err) => {
-            console.log(err.message);
-            navigate(`authentication/sign-in`);
           });
-      })
-      .catch((err) => {
-        console.log(err.message);
+        } else {
+          fetch("/admin").then((response) => {
+            response.json();
+            const staus = response.status;
+            console.log(response);
+            console.log(staus);
+            if (staus === 200 || staus === 201) {
+              window.location.href = "/dashboard";
+            } else {
+              alert("Nome o password errati");
+            }
+          });
+        }
       });
-
-    console.log(username);
-    console.log(password);
-    console.log(posts4);
   }
-  return (
-    <BasicLayout image={bgImage}>
-      <Card>
-        <MDBox
-          variant="gradient"
-          bgColor="info"
-          borderRadius="lg"
-          coloredShadow="info"
-          mx={2}
-          mt={-3}
-          p={2}
-          mb={1}
-          textAlign="center"
-        >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            ACCEDI
-          </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2} />
-            <Grid item xs={2} />
-            <Grid item xs={2} />
-          </Grid>
-        </MDBox>
-        <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <MDInput
-                type="email"
-                label="Email"
-                onChange={(e) => setUserName(e.target.value)}
-                fullWidth
-              />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput
-                type="password"
-                label="Password"
-                onChange={(e) => setPassword(e.target.value)}
-                fullWidth
-              />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Ricordati di me
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                color="info"
-                fullWidth
-                onClick={() => {
-                  doLogin();
-                }}
-                to={linkToLogin}
-              >
-                Accedi
-              </MDButton>
 
-              <MDBox>
-                <MDTypography> </MDTypography>
+  render() {
+    return (
+      <BasicLayout image={bgImage}>
+        <Card>
+          <MDBox
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+            mx={2}
+            mt={-3}
+            p={2}
+            mb={1}
+            textAlign="center"
+          >
+             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+              MyPortal - Mirabilia
+            </MDTypography>
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+              ACCEDI
+            </MDTypography>
+          {/*   <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
+              <Grid item xs={2} />
+              <Grid item xs={2} />
+              <Grid item xs={2} />
+            </Grid> */}
+          </MDBox>
+          <MDBox pt={4} pb={3} px={3}>
+            <MDBox component="form" role="form">
+              <MDBox mb={2}>
+                <MDInput
+                  type="email"
+                  label="Email"
+                  onChange={(e) => this.setState({ username: e.target.value })}
+                  fullWidth
+                />
+              </MDBox>
+              <MDBox mb={2}>
+                <MDInput
+                  type="password"
+                  label="Password"
+                  onChange={(e) => this.setState({ password: e.target.value })}
+                  fullWidth
+                />
+              </MDBox>
+              <MDBox display="flex" alignItems="center" ml={-1}>
+                {/* <Switch checked={rememberMe} onChange={handleSetRememberMe} /> */}
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  color="text"
+                  sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
+                >
+                  &nbsp;&nbsp;Ricordati di me
+                </MDTypography>
+              </MDBox>
+              <MDBox mt={4} mb={1}>
+                <MDButton variant="gradient" color="info" fullWidth onClick={this.handeledSubmit}>
+                  Accedi
+                </MDButton>
+
+                <MDBox>
+                  <MDTypography> </MDTypography>
+                </MDBox>
+              </MDBox>
+              <MDBox mt={3} mb={1} textAlign="center">
+                Buon Lavoro!
               </MDBox>
             </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
           </MDBox>
-        </MDBox>
-      </Card>
-    </BasicLayout>
-  );
+        </Card>
+      </BasicLayout>
+    );
+  }
 }
-
-export default Basic;

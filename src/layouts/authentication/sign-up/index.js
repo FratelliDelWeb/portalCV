@@ -14,27 +14,40 @@ Coded by www.creative-tim.com
 */
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 // @mui material components
-import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
+// import Card from "@mui/material/Card";
+// import Checkbox from "@mui/material/Checkbox";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
+// import MDBox from "components/MDBox";
+// import MDTypography from "components/MDTypography";
+// import MDInput from "components/MDInput";
+// import MDButton from "components/MDButton";
 
 // Authentication layout components
-import CoverLayout from "layouts/authentication/components/CoverLayout";
+// import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+// import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
 function Cover() {
+  fetch("/logout").then((response) => {
+    response.json();
+    const staus = response.status;
+    console.log(response);
+    console.log(staus);
+    if (staus === 200 || staus === 201) {
+      window.localStorage.setItem("token", "");
+      alert("logout OK");
+    } else {
+      alert("logout error");
+    }
+  });
   return (
-    <CoverLayout image={bgImage}>
+    /*  <CoverLayout image={bgImage}>
       <Card>
         <MDBox
           variant="gradient"
@@ -109,7 +122,8 @@ function Cover() {
           </MDBox>
         </MDBox>
       </Card>
-    </CoverLayout>
+    </CoverLayout> */
+    <CircularProgress color="success" />
   );
 }
 
