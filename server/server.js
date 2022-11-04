@@ -29,6 +29,7 @@ app.get('/api/users/:id', userAuth, usersRoute);
 app.get('/api/clienti', userAuth, clientsRoute);
 app.get('/api/clienti/:id', userAuth, clientsRoute);
 app.post('/api/search/clients', userAuth, clientsRoute);
+app.post('/api/clienti/modify', userAuth, clientsRoute);
 
 app.get("/admin", adminAuth, (req, res) => res.send({
   canAccess : true

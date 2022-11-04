@@ -7,7 +7,7 @@ exports.getAllClients = async (req, res, next) => {
     }catch(error){
         res.status(500).json({message: error.message})
     }
-}
+};
 
 exports.getClient = async (req, res, next) => {
     try{
@@ -16,7 +16,68 @@ exports.getClient = async (req, res, next) => {
     }catch(error){
         res.status(500).json({message: error.message})
     }
-}
+};
+
+exports.updateClient = async (req, res, next) => {
+    const { role, id } = req.body;
+    if (role && id) {
+      if (role === "admin") {
+        await Clienti.findById(id)
+          .then((client) => {
+            // Third - Verifies the user is not an admin
+            if (user.role !== "admin") {
+              user.role = role;
+              user.save((err) => {
+                //Monogodb error checker
+                if (err) {
+                  res.status("400").json({ message: "An error occurred", error: err.message });
+                  process.exit(1);
+                }
+                res.status("201").json({ message: "Update successful", user });
+              });
+            } else {
+              res.status(400).json({ message: "User is already an Admin" });
+            }
+          })
+          .catch((error) => {
+            res.status(400).json({ message: "An error occurred", error: error.message });
+          });
+      }
+    }
+};
+
+exports.modifyClient = async (req, res, next) => {
+    const data = req.body;
+    const id = data.id;
+    const field = data.field;
+    const fieldName = field.name;
+    const fromValue = field.from;
+    const toValue = field.to;
+
+    if (id) {
+        await Model.findById(id)
+          .then((client) => {
+            console.log(client)
+            console.log( "value : " + client[fieldName])
+            if(client[fieldName] === fromValue){
+                client[fieldName] = toValue;
+                client.save((err) => {
+                    //Monogodb error checker
+                    if (err) {
+                      res.status("400").json({ message: "An error occurred", error: err.message });
+                      process.exit(1);
+                    }
+                    res.status("201").json({ message: "Update successful", client });
+                  });
+            } else {
+                res.status(402).json({ message: "Not same value" });
+            }
+          })
+          .catch((error) => {
+            res.status(400).json({ message: "An error occurred", error: error.message });
+          });
+    }
+};
 
 exports.searchClient = async (req, res, next) => {
     try{
@@ -26,13 +87,15 @@ exports.searchClient = async (req, res, next) => {
 
         const query = {};
 
+
+        //Number
         if(search.CAP){
             const cap = search.CAP;
             if(cap.operation){
                 query.CAP = {}
                 switch(cap.operation){
                     case "not contains":
-                        query.CAP["$nin"] = cap.value;
+                        //Number can't
                         break;
                     case "equal":
                         query.CAP = cap.value;
@@ -41,10 +104,12 @@ exports.searchClient = async (req, res, next) => {
                         query.CAP["$ne"] = cap.value;
                         break;
                     case "is empty":
-                        query.CAP["$exists"] = false;
+                        query.CAP["$exists"] = true;
+                        query.CAP["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.CAP["$exists"] = true;
+                        query.CAP["$ne"] = "";
                         break;
                     default:
                         query.CAP = cap.value;
@@ -59,7 +124,7 @@ exports.searchClient = async (req, res, next) => {
                 query.Categoria = {};
                 switch(categoria.operation){
                     case "not contains":
-                        query.Categoria["$nin"] = categoria.value;
+                        query.Categoria["$not"] = new RegExp(categoria.value, 'i');
                         break;
                     case "equal":
                         query.Categoria = categoria.value;
@@ -68,10 +133,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Categoria["$ne"] = categoria.value;
                         break;
                     case "is empty":
-                        query.Categoria["$exists"] = false;
+                        query.Categoria["$exists"] = true;
+                        query.Categoria["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Categoria["$exists"] = true;
+                        query.Categoria["$ne"] = "";
                         break;
                     default:
                         query.Categoria = new RegExp(categoria.value, 'i');
@@ -80,40 +147,44 @@ exports.searchClient = async (req, res, next) => {
             }
         }
 
+        //Number
         if(search.CodiceAgenzia){
             const codiceAgenzia = search.CodiceAgenzia;
             if(codiceAgenzia.operation){
-                query.CodiceAgenzia = {};
+                query.CodiceAgenzia = {}
                 switch(codiceAgenzia.operation){
                     case "not contains":
-                        query.CodiceAgenzia["$nin"] = codiceAgenzia.value;
+                        //Number can't
                         break;
                     case "equal":
-                        query.CodiceAgenzia = codiceAgenzia.value;
+                        query.CodiceAgenzia = codiceCliente.value;
                         break;
                     case "not equal":
-                        query.CodiceAgenzia["$ne"] = codiceAgenzia.value;
+                        query.CodiceAgenzia["$ne"] = codiceCliente.value;
                         break;
                     case "is empty":
-                        query.CodiceAgenzia["$exists"] = false;
+                        query.CodiceAgenzia["$exists"] = true;
+                        query.CodiceAgenzia["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.CodiceAgenzia["$exists"] = true;
+                        query.CodiceAgenzia["$ne"] = "";
                         break;
                     default:
-                        query.CodiceAgenzia = codiceAgenzia.value;
+                        query.CodiceAgenzia = codiceCliente.value;
                         break;
                 }
             }
         }
 
+        //Number
         if(search.CodiceCliente){
             const codiceCliente = search.CodiceCliente;
             if(codiceCliente.operation){
-                query.CodiceCliente = {};
+                query.CodiceCliente = {}
                 switch(codiceCliente.operation){
                     case "not contains":
-                        query.CodiceCliente ["$nin"] = codiceCliente.value;
+                        //Number can't
                         break;
                     case "equal":
                         query.CodiceCliente = codiceCliente.value;
@@ -122,25 +193,27 @@ exports.searchClient = async (req, res, next) => {
                         query.CodiceCliente["$ne"] = codiceCliente.value;
                         break;
                     case "is empty":
-                        query.CodiceCliente["$exists"] = false;
+                        query.CodiceCliente["$exists"] = true;
+                        query.CodiceCliente["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.CodiceCliente["$exists"] = true;
+                        query.CodiceCliente["$ne"] = "";
                         break;
                     default:
                         query.CodiceCliente = codiceCliente.value;
                         break;
                 }
-            }   
+            }
         }
 
         if(search.CodiceFiscale){
-            const codiceFiscale = search.codiceFiscale;
+            const codiceFiscale = search.CodiceFiscale;
             if(codiceFiscale.operation){
-                query.CodiceFiscale = {}
+                query.CodiceFiscale = {};
                 switch(codiceFiscale.operation){
                     case "not contains":
-                        query.CodiceFiscale["$nin"] = codiceFiscale.value;
+                        query.CodiceFiscale["$not"] = new RegExp(codiceFiscale.value, 'i');
                         break;
                     case "equal":
                         query.CodiceFiscale = codiceFiscale.value;
@@ -149,10 +222,12 @@ exports.searchClient = async (req, res, next) => {
                         query.CodiceFiscale["$ne"] = codiceFiscale.value;
                         break;
                     case "is empty":
-                        query.CodiceFiscale["$exists"] = false;
+                        query.CodiceFiscale["$exists"] = true;
+                        query.CodiceFiscale["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.CodiceFiscale["$exists"] = true;
+                        query.CodiceFiscale["$ne"] = "";
                         break;
                     default:
                         query.CodiceFiscale = new RegExp(codiceFiscale.value, 'i');
@@ -164,10 +239,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.Cognome){
             const cognome = search.Cognome;
             if(cognome.operation){
-                query.Cognome = {}
+                query.Cognome = {};
                 switch(cognome.operation){
                     case "not contains":
-                        query.Cognome["$nin"] = cognome.value;
+                        query.Cognome["$not"] = new RegExp(cognome.value, 'i');
                         break;
                     case "equal":
                         query.Cognome = cognome.value;
@@ -176,10 +251,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Cognome["$ne"] = cognome.value;
                         break;
                     case "is empty":
-                        query.Cognome["$exists"] = false;
+                        query.Cognome["$exists"] = true;
+                        query.Cognome["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Cognome["$exists"] = true;
+                        query.Cognome["$ne"] = "";
                         break;
                     default:
                         query.Cognome = new RegExp(cognome.value, 'i');
@@ -188,13 +265,15 @@ exports.searchClient = async (req, res, next) => {
             }
         }
 
+
+        //Number
         if(search.Contattabile){
             const contattabile = search.Contattabile;
             if(contattabile.operation){
                 query.Contattabile = {}
                 switch(contattabile.operation){
                     case "not contains":
-                        query.Contattabile["$nin"] = contattabile.value;
+                        //Number can't
                         break;
                     case "equal":
                         query.Contattabile = contattabile.value;
@@ -203,10 +282,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Contattabile["$ne"] = contattabile.value;
                         break;
                     case "is empty":
-                        query.Contattabile["$exists"] = false;
+                        query.Contattabile["$exists"] = true;
+                        query.Contattabile["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Contattabile["$exists"] = true;
+                        query.Contattabile["$ne"] = "";
                         break;
                     default:
                         query.Contattabile = contattabile.value;
@@ -218,10 +299,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.DataAggiornamentoSaldo){
             const dataAggiornamentoSaldo = search.DataAggiornamentoSaldo;
             if(dataAggiornamentoSaldo.operation){
-                query.DataAggiornamentoSaldo = {}
+                query.DataAggiornamentoSaldo = {};
                 switch(dataAggiornamentoSaldo.operation){
                     case "not contains":
-                        query.DataAggiornamentoSaldo["$nin"] = dataAggiornamentoSaldo.value;
+                        query.DataAggiornamentoSaldo["$not"] = new RegExp(dataAggiornamentoSaldo.value, 'i');
                         break;
                     case "equal":
                         query.DataAggiornamentoSaldo = dataAggiornamentoSaldo.value;
@@ -230,10 +311,12 @@ exports.searchClient = async (req, res, next) => {
                         query.DataAggiornamentoSaldo["$ne"] = dataAggiornamentoSaldo.value;
                         break;
                     case "is empty":
-                        query.DataAggiornamentoSaldo["$exists"] = false;
+                        query.DataAggiornamentoSaldo["$exists"] = true;
+                        query.DataAggiornamentoSaldo["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.DataAggiornamentoSaldo["$exists"] = true;
+                        query.DataAggiornamentoSaldo["$ne"] = "";
                         break;
                     default:
                         query.DataAggiornamentoSaldo = new RegExp(dataAggiornamentoSaldo.value, 'i');
@@ -245,10 +328,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.DataNascita){
             const dataNascita= search.DataNascita;
             if(dataNascita.operation){
-                query.DataNascita = {}
+                query.DataNascita = {};
                 switch(dataNascita.operation){
                     case "not contains":
-                        query.DataNascita["$nin"] = dataNascita.value;
+                        query.DataNascita["$not"] = new RegExp(dataNascita.value, 'i');
                         break;
                     case "equal":
                         query.DataNascita = dataNascita.value;
@@ -257,10 +340,12 @@ exports.searchClient = async (req, res, next) => {
                         query.DataNascita["$ne"] = dataNascita.value;
                         break;
                     case "is empty":
-                        query.DataNascita["$exists"] = false;
+                        query.DataNascita["$exists"] = true;
+                        query.DataNascita["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.DataNascita["$exists"] = true;
+                        query.DataNascita["$ne"] = "";
                         break;
                     default:
                         query.DataNascita = new RegExp(dataNascita.value, 'i');
@@ -272,10 +357,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.DataRichiamo){
             const dataRichiamo= search.DataRichiamo;
             if(dataRichiamo.operation){
-                query.DataRichiamo = {}
+                query.DataRichiamo = {};
                 switch(dataRichiamo.operation){
                     case "not contains":
-                        query.DataRichiamo["$nin"] = dataRichiamo.value;
+                        query.DataRichiamo["$not"] = new RegExp(dataRichiamo.value, 'i');
                         break;
                     case "equal":
                         query.DataRichiamo = dataRichiamo.value;
@@ -284,10 +369,12 @@ exports.searchClient = async (req, res, next) => {
                         query.DataRichiamo["$ne"] = dataRichiamo.value;
                         break;
                     case "is empty":
-                        query.DataRichiamo["$exists"] = false;
+                        query.DataRichiamo["$exists"] = true;
+                        query.DataRichiamo["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.DataRichiamo["$exists"] = true;
+                        query.DataRichiamo["$ne"] = "";
                         break;
                     default:
                         query.DataRichiamo = new RegExp(dataRichiamo.value, 'i');
@@ -299,10 +386,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.Denominazione){
             const denominazione= search.Denominazione;
             if(denominazione.operation){
-                query.Denominazione = {}
+                query.Denominazione = {};
                 switch(denominazione.operation){
                     case "not contains":
-                        query.Denominazione["$nin"] = denominazione.value;
+                        query.Denominazione["$not"] = new RegExp(denominazione.value, 'i');
                         break;
                     case "equal":
                         query.Denominazione = denominazione.value;
@@ -311,10 +398,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Denominazione["$ne"] = denominazione.value;
                         break;
                     case "is empty":
-                        query.Denominazione["$exists"] = false;
+                        query.Denominazione["$exists"] = true;
+                        query.Denominazione["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Denominazione["$exists"] = true;
+                        query.Denominazione["$ne"] = "";
                         break;
                     default:
                         query.Denominazione = new RegExp(denominazione.value, 'i');
@@ -324,12 +413,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Email){
-            const email= search.Email;
+            const email = search.Email;
             if(email.operation){
-                query.Email = {}
+                query.Email = {};
                 switch(email.operation){
                     case "not contains":
-                        query.Email["$nin"] = email.value;
+                        query.Email["$not"] = new RegExp(email.value, 'i');
                         break;
                     case "equal":
                         query.Email = email.value;
@@ -338,10 +427,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Email["$ne"] = email.value;
                         break;
                     case "is empty":
-                        query.Email["$exists"] = false;
+                        query.Email["$exists"] = true;
+                        query.Email["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Email["$exists"] = true;
+                        query.Email["$ne"] = "";
                         break;
                     default:
                         query.Email = new RegExp(email.value, 'i');
@@ -351,24 +442,26 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Fax){
-            const fax= search.Fax;
+            const fax = search.Fax;
             if(fax.operation){
-                query.Fax = {}
+                query.Fax = {};
                 switch(fax.operation){
                     case "not contains":
-                        query.Fax["$nin"] = fax.value;
+                        query.Fax["$not"] = new RegExp(fax.value, 'i');
                         break;
                     case "equal":
                         query.Fax = fax.value;
                         break;
                     case "not equal":
-                        query.fax["$ne"] = fax.value;
+                        query.Fax["$ne"] = fax.value;
                         break;
                     case "is empty":
-                        query.Fax["$exists"] = false;
+                        query.Fax["$exists"] = true;
+                        query.Fax["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Fax["$exists"] = true;
+                        query.Fax["$ne"] = "";
                         break;
                     default:
                         query.Fax = new RegExp(fax.value, 'i');
@@ -378,12 +471,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.IBAN){
-            const iban= search.IBAN;
+            const iban = search.IBAN;
             if(iban.operation){
-                query.IBAN = {}
+                query.IBAN = {};
                 switch(iban.operation){
                     case "not contains":
-                        query.IBAN["$nin"] = iban.value;
+                        query.IBAN["$not"] = new RegExp(iban.value, 'i');
                         break;
                     case "equal":
                         query.IBAN = iban.value;
@@ -392,10 +485,12 @@ exports.searchClient = async (req, res, next) => {
                         query.IBAN["$ne"] = iban.value;
                         break;
                     case "is empty":
-                        query.IBAN["$exists"] = false;
+                        query.IBAN["$exists"] = true;
+                        query.IBAN["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.IBAN["$exists"] = true;
+                        query.IBAN["$ne"] = "";
                         break;
                     default:
                         query.IBAN = new RegExp(iban.value, 'i');
@@ -405,12 +500,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.ImportoRata){
-            const importoRata= search.ImportoRata;
+            const importoRata = search.ImportoRata;
             if(importoRata.operation){
-                query.ImportoRata = {}
+                query.ImportoRata = {};
                 switch(importoRata.operation){
                     case "not contains":
-                        query.ImportoRata["$nin"] = importoRata.value;
+                        query.ImportoRata["$not"] = new RegExp(importoRata.value, 'i');
                         break;
                     case "equal":
                         query.ImportoRata = importoRata.value;
@@ -419,10 +514,12 @@ exports.searchClient = async (req, res, next) => {
                         query.ImportoRata["$ne"] = importoRata.value;
                         break;
                     case "is empty":
-                        query.ImportoRata["$exists"] = false;
+                        query.ImportoRata["$exists"] = true;
+                        query.ImportoRata["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.ImportoRata["$exists"] = true;
+                        query.ImportoRata["$ne"] = "";
                         break;
                     default:
                         query.ImportoRata = new RegExp(importoRata.value, 'i');
@@ -431,13 +528,14 @@ exports.searchClient = async (req, res, next) => {
             }
         }
 
+        //Number
         if(search.ImportoRataStorica){
-            const importoRataStorica= search.ImportoRataStorica;
+            const importoRataStorica = search.ImportoRataStorica;
             if(importoRataStorica.operation){
                 query.ImportoRataStorica = {}
                 switch(importoRataStorica.operation){
                     case "not contains":
-                        query.ImportoRataStorica["$nin"] = importoRataStorica.value;
+                        //Number can't
                         break;
                     case "equal":
                         query.ImportoRataStorica = importoRataStorica.value;
@@ -446,10 +544,12 @@ exports.searchClient = async (req, res, next) => {
                         query.ImportoRataStorica["$ne"] = importoRataStorica.value;
                         break;
                     case "is empty":
-                        query.ImportoRataStorica["$exists"] = false;
+                        query.ImportoRataStorica["$exists"] = true;
+                        query.ImportoRataStorica["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.ImportoRataStorica["$exists"] = true;
+                        query.ImportoRataStorica["$ne"] = "";
                         break;
                     default:
                         query.ImportoRataStorica = importoRataStorica.value;
@@ -458,13 +558,14 @@ exports.searchClient = async (req, res, next) => {
             }
         }
 
+        //Number
         if(search.ImportoSaldoAttualizzato){
-            const importoSaldoAttualizzato= search.ImportoSaldoAttualizzato;
+            const importoSaldoAttualizzato = search.ImportoSaldoAttualizzato;
             if(importoSaldoAttualizzato.operation){
                 query.ImportoSaldoAttualizzato = {}
                 switch(importoSaldoAttualizzato.operation){
                     case "not contains":
-                        query.ImportoSaldoAttualizzato["$nin"] = importoSaldoAttualizzato.value;
+                        //Number can't
                         break;
                     case "equal":
                         query.ImportoSaldoAttualizzato = importoSaldoAttualizzato.value;
@@ -473,10 +574,12 @@ exports.searchClient = async (req, res, next) => {
                         query.ImportoSaldoAttualizzato["$ne"] = importoSaldoAttualizzato.value;
                         break;
                     case "is empty":
-                        query.ImportoSaldoAttualizzato["$exists"] = false;
+                        query.ImportoSaldoAttualizzato["$exists"] = true;
+                        query.ImportoSaldoAttualizzato["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.ImportoSaldoAttualizzato["$exists"] = true;
+                        query.ImportoSaldoAttualizzato["$ne"] = "";
                         break;
                     default:
                         query.ImportoSaldoAttualizzato = importoSaldoAttualizzato.value;
@@ -488,10 +591,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.ImportoSaldoContabile){
             const importoSaldoContabile= search.ImportoSaldoContabile;
             if(importoSaldoContabile.operation){
-                query.ImportoSaldoContabile = {}
+                query.ImportoSaldoContabile = {};
                 switch(importoSaldoContabile.operation){
                     case "not contains":
-                        query.ImportoSaldoContabile["$nin"] = importoSaldoContabile.value;
+                        query.ImportoSaldoContabile["$not"] = new RegExp(importoSaldoContabile.value, 'i');
                         break;
                     case "equal":
                         query.ImportoSaldoContabile = importoSaldoContabile.value;
@@ -500,10 +603,12 @@ exports.searchClient = async (req, res, next) => {
                         query.ImportoSaldoContabile["$ne"] = importoSaldoContabile.value;
                         break;
                     case "is empty":
-                        query.ImportoSaldoContabile["$exists"] = false;
+                        query.ImportoSaldoContabile["$exists"] = true;
+                        query.ImportoSaldoContabile["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.ImportoSaldoContabile["$exists"] = true;
+                        query.ImportoSaldoContabile["$ne"] = "";
                         break;
                     default:
                         query.ImportoSaldoContabile = new RegExp(importoSaldoContabile.value, 'i');
@@ -512,13 +617,14 @@ exports.searchClient = async (req, res, next) => {
             }
         }
 
+        //Number
         if(search.ImportoSaldoStorico){
             const importoSaldoStorico= search.ImportoSaldoStorico;
             if(importoSaldoStorico.operation){
                 query.ImportoSaldoStorico = {}
                 switch(importoSaldoStorico.operation){
                     case "not contains":
-                        query.ImportoSaldoStorico["$nin"] = importoSaldoStorico.value;
+                        //Number can't
                         break;
                     case "equal":
                         query.ImportoSaldoStorico = importoSaldoStorico.value;
@@ -527,10 +633,12 @@ exports.searchClient = async (req, res, next) => {
                         query.ImportoSaldoStorico["$ne"] = importoSaldoStorico.value;
                         break;
                     case "is empty":
-                        query.ImportoSaldoStorico["$exists"] = false;
+                        query.ImportoSaldoStorico["$exists"] = true;
+                        query.ImportoSaldoStorico["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.ImportoSaldoStorico["$exists"] = true;
+                        query.ImportoSaldoStorico["$ne"] = "";
                         break;
                     default:
                         query.ImportoSaldoStorico = importoSaldoStorico.value;
@@ -540,12 +648,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Indirizzo){
-            const indirizzo= search.Indirizzo;
+            const indirizzo = search.Indirizzo;
             if(indirizzo.operation){
-                query.Indirizzo = {}
+                query.Indirizzo = {};
                 switch(indirizzo.operation){
                     case "not contains":
-                        query.Indirizzo["$nin"] = indirizzo.value;
+                        query.Indirizzo["$not"] = new RegExp(indirizzo.value, 'i');
                         break;
                     case "equal":
                         query.Indirizzo = indirizzo.value;
@@ -554,10 +662,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Indirizzo["$ne"] = indirizzo.value;
                         break;
                     case "is empty":
-                        query.Indirizzo["$exists"] = false;
+                        query.Indirizzo["$exists"] = true;
+                        query.Indirizzo["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Indirizzo["$exists"] = true;
+                        query.Indirizzo["$ne"] = "";
                         break;
                     default:
                         query.Indirizzo = new RegExp(indirizzo.value, 'i');
@@ -567,12 +677,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Indirizzo2){
-            const indirizzo2= search.Indirizzo2;
+            const indirizzo2 = search.Indirizzo2;
             if(indirizzo2.operation){
-                query.Indirizzo2 = {}
+                query.Indirizzo2 = {};
                 switch(indirizzo2.operation){
                     case "not contains":
-                        query.Indirizzo["$nin"] = indirizzo2.value;
+                        query.Indirizzo2["$not"] = new RegExp(indirizzo2.value, 'i');
                         break;
                     case "equal":
                         query.Indirizzo2 = indirizzo2.value;
@@ -581,10 +691,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Indirizzo2["$ne"] = indirizzo2.value;
                         break;
                     case "is empty":
-                        query.Indirizzo2["$exists"] = false;
+                        query.Indirizzo2["$exists"] = true;
+                        query.Indirizzo2["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Indirizzo2["$exists"] = true;
+                        query.Indirizzo2["$ne"] = "";
                         break;
                     default:
                         query.Indirizzo2 = new RegExp(indirizzo2.value, 'i');
@@ -594,12 +706,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Località){
-            const località= search.Località;
+            const località = search.Località;
             if(località.operation){
-                query.Località = {}
+                query.Località = {};
                 switch(località.operation){
                     case "not contains":
-                        query.Località["$nin"] = località.value;
+                        query.Località["$not"] = new RegExp(località.value, 'i');
                         break;
                     case "equal":
                         query.Località = località.value;
@@ -608,10 +720,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Località["$ne"] = località.value;
                         break;
                     case "is empty":
-                        query.Località["$exists"] = false;
+                        query.Località["$exists"] = true;
+                        query.Località["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Località["$exists"] = true;
+                        query.Località["$ne"] = "";
                         break;
                     default:
                         query.Località = new RegExp(località.value, 'i');
@@ -623,10 +737,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.Località2){
             const località2= search.Località2;
             if(località2.operation){
-                query.Località2 = {}
+                query.Località2 = {};
                 switch(località2.operation){
                     case "not contains":
-                        query.Località2["$nin"] = località2.value;
+                        query.Località2["$not"] = new RegExp(località2.value, 'i');
                         break;
                     case "equal":
                         query.Località2 = località2.value;
@@ -635,10 +749,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Località2["$ne"] = località2.value;
                         break;
                     case "is empty":
-                        query.Località2["$exists"] = false;
+                        query.Località2["$exists"] = true;
+                        query.Località2["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Località2["$exists"] = true;
+                        query.Località2["$ne"] = "";
                         break;
                     default:
                         query.Località2 = new RegExp(località2.value, 'i');
@@ -648,12 +764,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Nome){
-            const nome= search.Nome;
+            const nome = search.Nome;
             if(nome.operation){
-                query.Nome = {}
+                query.Nome = {};
                 switch(nome.operation){
                     case "not contains":
-                        query.Nome["$nin"] = nome.value;
+                        query.Nome["$not"] = new RegExp(nome.value, 'i');
                         break;
                     case "equal":
                         query.Nome = nome.value;
@@ -662,10 +778,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Nome["$ne"] = nome.value;
                         break;
                     case "is empty":
-                        query.Nome["$exists"] = false;
+                        query.Nome["$exists"] = true;
+                        query.Nome["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Nome["$exists"] = true;
+                        query.Nome["$ne"] = "";
                         break;
                     default:
                         query.Nome = new RegExp(nome.value, 'i');
@@ -675,12 +793,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Note){
-            const note= search.Note;
+            const note = search.Note;
             if(note.operation){
-                query.Note = {}
+                query.Note = {};
                 switch(note.operation){
                     case "not contains":
-                        query.Note["$nin"] = note.value;
+                        query.Note["$not"] = new RegExp(note.value, 'i');
                         break;
                     case "equal":
                         query.Note = note.value;
@@ -689,10 +807,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Note["$ne"] = note.value;
                         break;
                     case "is empty":
-                        query.Note["$exists"] = false;
+                        query.Note["$exists"] = true;
+                        query.Note["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Note["$exists"] = true;
+                        query.Note["$ne"] = "";
                         break;
                     default:
                         query.Note = new RegExp(note.value, 'i');
@@ -702,12 +822,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Operatore){
-            const operatore= search.Operatore;
+            const operatore = search.Operatore;
             if(operatore.operation){
-                query.Operatore = {}
+                query.Operatore = {};
                 switch(operatore.operation){
                     case "not contains":
-                        query.Operatore["$nin"] = operatore.value;
+                        query.Operatore["$not"] = new RegExp(operatore.value, 'i');
                         break;
                     case "equal":
                         query.Operatore = operatore.value;
@@ -716,10 +836,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Operatore["$ne"] = operatore.value;
                         break;
                     case "is empty":
-                        query.Operatore["$exists"] = false;
+                        query.Operatore["$exists"] = true;
+                        query.Operatore["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Operatore["$exists"] = true;
+                        query.Operatore["$ne"] = "";
                         break;
                     default:
                         query.Operatore = new RegExp(operatore.value, 'i');
@@ -729,12 +851,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.PartitaIVA){
-            const partitaIva= search.PartitaIVA;
+            const partitaIva = search.PartitaIVA;
             if(partitaIva.operation){
-                query.PartitaIVA = {}
+                query.PartitaIVA = {};
                 switch(partitaIva.operation){
                     case "not contains":
-                        query.PartitaIVA["$nin"] = partitaIva.value;
+                        query.PartitaIVA["$not"] = new RegExp(partitaIva.value, 'i');
                         break;
                     case "equal":
                         query.PartitaIVA = partitaIva.value;
@@ -743,10 +865,12 @@ exports.searchClient = async (req, res, next) => {
                         query.PartitaIVA["$ne"] = partitaIva.value;
                         break;
                     case "is empty":
-                        query.PartitaIVA["$exists"] = false;
+                        query.PartitaIVA["$exists"] = true;
+                        query.PartitaIVA["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.PartitaIVA["$exists"] = true;
+                        query.PartitaIVA["$ne"] = "";
                         break;
                     default:
                         query.PartitaIVA = new RegExp(partitaIva.value, 'i');
@@ -756,12 +880,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Provincia){
-            const provincia= search.Provincia;
+            const provincia = search.Provincia;
             if(provincia.operation){
-                query.Provincia = {}
+                query.Provincia = {};
                 switch(provincia.operation){
                     case "not contains":
-                        query.Provincia["$nin"] = provincia.value;
+                        query.Provincia["$not"] = new RegExp(provincia.value, 'i');
                         break;
                     case "equal":
                         query.Provincia = provincia.value;
@@ -770,10 +894,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Provincia["$ne"] = provincia.value;
                         break;
                     case "is empty":
-                        query.Provincia["$exists"] = false;
+                        query.Provincia["$exists"] = true;
+                        query.Provincia["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Provincia["$exists"] = true;
+                        query.Provincia["$ne"] = "";
                         break;
                     default:
                         query.Provincia = new RegExp(provincia.value, 'i');
@@ -783,12 +909,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Provincia2){
-            const provincia2= search.Provincia2;
+            const provincia2 = search.Provincia2;
             if(provincia2.operation){
-                query.Provincia2 = {}
+                query.Provincia2 = {};
                 switch(provincia2.operation){
                     case "not contains":
-                        query.Provincia2["$nin"] = provincia2.value;
+                        query.Provincia2["$not"] = new RegExp(provincia2.value, 'i');
                         break;
                     case "equal":
                         query.Provincia2 = provincia2.value;
@@ -797,10 +923,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Provincia2["$ne"] = provincia2.value;
                         break;
                     case "is empty":
-                        query.Provincia2["$exists"] = false;
+                        query.Provincia2["$exists"] = true;
+                        query.Provincia2["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Provincia2["$exists"] = true;
+                        query.Provincia2["$ne"] = "";
                         break;
                     default:
                         query.Provincia2 = new RegExp(provincia2.value, 'i');
@@ -810,12 +938,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Sesso){
-            const sesso= search.Sesso;
+            const sesso = search.Sesso;
             if(sesso.operation){
-                query.Sesso = {}
+                query.Provincia2 = {};
                 switch(sesso.operation){
                     case "not contains":
-                        query.Sesso["$nin"] = sesso.value;
+                        query.Sesso["$not"] = new RegExp(sesso.value, 'i');
                         break;
                     case "equal":
                         query.Sesso = sesso.value;
@@ -824,10 +952,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Sesso["$ne"] = sesso.value;
                         break;
                     case "is empty":
-                        query.Sesso["$exists"] = false;
+                        query.Sesso["$exists"] = true;
+                        query.Sesso["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Sesso["$exists"] = true;
+                        query.Sesso["$ne"] = "";
                         break;
                     default:
                         query.Sesso = new RegExp(sesso.value, 'i');
@@ -837,12 +967,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Telefono1){
-            const telefono1= search.Telefono1;
+            const telefono1 = search.Telefono1;
             if(telefono1.operation){
-                query.Telefono1 = {}
+                query.Telefono1 = {};
                 switch(telefono1.operation){
                     case "not contains":
-                        query.Telefono1["$nin"] = telefono1.value;
+                        query.Telefono1["$not"] = new RegExp(telefono1.value, 'i');
                         break;
                     case "equal":
                         query.Telefono1 = telefono1.value;
@@ -851,10 +981,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Telefono1["$ne"] = telefono1.value;
                         break;
                     case "is empty":
-                        query.Telefono1["$exists"] = false;
+                        query.Telefono1["$exists"] = true;
+                        query.Telefono1["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Telefono1["$exists"] = true;
+                        query.Telefono1["$ne"] = "";
                         break;
                     default:
                         query.Telefono1 = new RegExp(telefono1.value, 'i');
@@ -864,12 +996,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Telefono2){
-            const telefono2= search.Telefono2;
+            const telefono2 = search.Telefono2;
             if(telefono2.operation){
-                query.Telefono2 = {}
+                query.Telefono2 = {};
                 switch(telefono2.operation){
                     case "not contains":
-                        query.Telefono2["$nin"] = telefono2.value;
+                        query.Telefono2["$not"] = new RegExp(telefono2.value, 'i');
                         break;
                     case "equal":
                         query.Telefono2 = telefono2.value;
@@ -878,10 +1010,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Telefono2["$ne"] = telefono2.value;
                         break;
                     case "is empty":
-                        query.Telefono2["$exists"] = false;
+                        query.Telefono2["$exists"] = true;
+                        query.Telefono2["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Telefono2["$exists"] = true;
+                        query.Telefono2["$ne"] = "";
                         break;
                     default:
                         query.Telefono2 = new RegExp(telefono2.value, 'i');
@@ -891,12 +1025,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.Telefono3){
-            const telefono3= search.Telefono3;
+            const telefono3 = search.Telefono3;
             if(telefono3.operation){
-                query.Telefono3 = {}
+                query.Telefono3 = {};
                 switch(telefono3.operation){
                     case "not contains":
-                        query.Telefono3["$nin"] = telefono3.value;
+                        query.Telefono3["$not"] = new RegExp(telefono3.value, 'i');
                         break;
                     case "equal":
                         query.Telefono3 = telefono3.value;
@@ -905,10 +1039,12 @@ exports.searchClient = async (req, res, next) => {
                         query.Telefono3["$ne"] = telefono3.value;
                         break;
                     case "is empty":
-                        query.Telefono3["$exists"] = false;
+                        query.Telefono3["$exists"] = true;
+                        query.Telefono3["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.Telefono3["$exists"] = true;
+                        query.Telefono3["$ne"] = "";
                         break;
                     default:
                         query.Telefono3 = new RegExp(telefono3.value, 'i');
@@ -920,10 +1056,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.TipoCliente){
             const tipoCliente = search.TipoCliente;
             if(tipoCliente.operation){
-                query.TipoCliente= {}
+                query.TipoCliente = {};
                 switch(tipoCliente.operation){
                     case "not contains":
-                        query.TipoCliente["$nin"] = tipoCliente.value;
+                        query.TipoCliente["$not"] = new RegExp(tipoCliente.value, 'i');
                         break;
                     case "equal":
                         query.TipoCliente = tipoCliente.value;
@@ -932,10 +1068,12 @@ exports.searchClient = async (req, res, next) => {
                         query.TipoCliente["$ne"] = tipoCliente.value;
                         break;
                     case "is empty":
-                        query.TipoCliente["$exists"] = false;
+                        query.TipoCliente["$exists"] = true;
+                        query.TipoCliente["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.TipoCliente["$exists"] = true;
+                        query.TipoCliente["$ne"] = "";
                         break;
                     default:
                         query.TipoCliente = new RegExp(tipoCliente.value, 'i');
@@ -947,10 +1085,10 @@ exports.searchClient = async (req, res, next) => {
         if(search.TipoContoStorico){
             const tipoContoStorico = search.TipoContoStorico;
             if(tipoContoStorico.operation){
-                query.TipoContoStorico= {}
+                query.TipoContoStorico = {};
                 switch(tipoContoStorico.operation){
                     case "not contains":
-                        query.TipoContoStorico["$nin"] = tipoContoStorico.value;
+                        query.TipoContoStorico["$not"] = new RegExp(tipoContoStorico.value, 'i');
                         break;
                     case "equal":
                         query.TipoContoStorico = tipoContoStorico.value;
@@ -959,10 +1097,12 @@ exports.searchClient = async (req, res, next) => {
                         query.TipoContoStorico["$ne"] = tipoContoStorico.value;
                         break;
                     case "is empty":
-                        query.TipoContoStorico["$exists"] = false;
+                        query.TipoContoStorico["$exists"] = true;
+                        query.TipoContoStorico["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.TipoContoStorico["$exists"] = true;
+                        query.TipoContoStorico["$ne"] = "";
                         break;
                     default:
                         query.TipoContoStorico = new RegExp(tipoContoStorico.value, 'i');
@@ -972,12 +1112,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.TipoPagamentoStorico){
-            const tipoPagamentoStorico= search.TipoPagamentoStorico;
+            const tipoPagamentoStorico = search.TipoPagamentoStorico;
             if(tipoPagamentoStorico.operation){
-                query.TipoPagamentoStorico= {}
+                query.TipoPagamentoStorico = {};
                 switch(tipoPagamentoStorico.operation){
                     case "not contains":
-                        query.TipoPagamentoStorico["$nin"] = tipoPagamentoStorico.value;
+                        query.TipoPagamentoStorico["$not"] = new RegExp(tipoPagamentoStorico.value, 'i');
                         break;
                     case "equal":
                         query.TipoPagamentoStorico = tipoPagamentoStorico.value;
@@ -986,25 +1126,27 @@ exports.searchClient = async (req, res, next) => {
                         query.TipoPagamentoStorico["$ne"] = tipoPagamentoStorico.value;
                         break;
                     case "is empty":
-                        query.TipoPagamentoStorico["$exists"] = false;
+                        query.TipoPagamentoStorico["$exists"] = true;
+                        query.TipoPagamentoStorico["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.TipoPagamentoStorico["$exists"] = true;
+                        query.TipoPagamentoStorico["$ne"] = "";
                         break;
                     default:
-                        query.TipoPagamentoStorico= new RegExp(tipoPagamentoStorico.value, 'i');
+                        query.TipoPagamentoStorico = new RegExp(tipoPagamentoStorico.value, 'i');
                         break;
                 }
             }
         }
 
         if(search.TipoRagioneSociale){
-            const tipoRagioneSociale= search.TipoRagioneSociale;
+            const tipoRagioneSociale = search.TipoRagioneSociale;
             if(tipoRagioneSociale.operation){
-                query.TipoRagioneSociale= {}
+                query.TipoRagioneSociale = {};
                 switch(tipoRagioneSociale.operation){
                     case "not contains":
-                        query.TipoRagioneSociale["$nin"] = tipoRagioneSociale.value;
+                        query.TipoRagioneSociale["$not"] = new RegExp(tipoRagioneSociale.value, 'i');
                         break;
                     case "equal":
                         query.TipoRagioneSociale = tipoRagioneSociale.value;
@@ -1013,10 +1155,12 @@ exports.searchClient = async (req, res, next) => {
                         query.TipoRagioneSociale["$ne"] = tipoRagioneSociale.value;
                         break;
                     case "is empty":
-                        query.TipoRagioneSociale["$exists"] = false;
+                        query.TipoRagioneSociale["$exists"] = true;
+                        query.TipoRagioneSociale["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.TipoRagioneSociale["$exists"] = true;
+                        query.TipoRagioneSociale["$ne"] = "";
                         break;
                     default:
                         query.TipoRagioneSociale = new RegExp(tipoRagioneSociale.value, 'i');
@@ -1026,12 +1170,12 @@ exports.searchClient = async (req, res, next) => {
         }
 
         if(search.TitoloAcc){
-            const titoloAcc= search.TitoloAcc;
+            const titoloAcc = search.TitoloAcc;
             if(titoloAcc.operation){
-                query.TitoloAcc= {}
+                query.TitoloAcc = {};
                 switch(titoloAcc.operation){
                     case "not contains":
-                        query.TitoloAcc["$nin"] = titoloAcc.value;
+                        query.TitoloAcc["$not"] = new RegExp(titoloAcc.value, 'i');
                         break;
                     case "equal":
                         query.TitoloAcc = titoloAcc.value;
@@ -1040,10 +1184,12 @@ exports.searchClient = async (req, res, next) => {
                         query.TitoloAcc["$ne"] = titoloAcc.value;
                         break;
                     case "is empty":
-                        query.TitoloAcc["$exists"] = false;
+                        query.TitoloAcc["$exists"] = true;
+                        query.TitoloAcc["$in"] = ["",null,0];
                         break;
                     case "is not empty":
                         query.TitoloAcc["$exists"] = true;
+                        query.TitoloAcc["$ne"] = "";
                         break;
                     default:
                         query.TitoloAcc = new RegExp(titoloAcc.value, 'i');
