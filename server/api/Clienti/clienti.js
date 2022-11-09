@@ -81,7 +81,7 @@ exports.modifyClient = async (req, res, next) => {
 
 exports.searchClient = async (req, res, next) => {
     try{
-        const search = req.body;
+        const search = req.body.query;
         const page = search.page;
         const limit = search.limit;
 
