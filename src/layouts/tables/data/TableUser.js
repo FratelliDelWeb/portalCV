@@ -2,16 +2,30 @@ import React, { useState, useEffect } from "react";
 import DataTable from "examples/Tables/DataTable";
 
 export default function TableUser() {
+  
   const [posts, setPosts] = useState([
   ]);
-const [limite, setLimite] = useState(10)
-   const baseDatiUser = [];
-  const handleSetLimit = (childData) =>{
-    this.props.setEntriesPerPage(childData);
-    this.setLimite(childData);
+
+  const [query, setQuery] = useState({});
+
+  const [limite, setLimite] = useState(10);
+
+  const [page, setPage] = useState(1);
+
+  const baseDatiUser = [];
+
+  const handleSetLimit = () =>{
+    setLimite(20);
+    console.log('Componente Padre : limit dopo => ' + limite);
+    console.log('Componente Padre : childData => ');
+    return limite;
 }
 
-  const searchClients = (limit = limite, page = 1, query = {
+  const getEntriesPage = () => {
+    return {defaultValue : limite}
+  }
+
+  const searchClients = (limit = 50, page = 1, query = {
     Telefono1: {
         value: "",
         operation: "is not empty"
@@ -42,9 +56,19 @@ const [limite, setLimite] = useState(10)
       })
       .catch((err) => err);
   }
+
   useEffect(() => {
-    searchClients()
+    searchClients(limite,page,query)
+  }, [limite,page,query]);
+
+  useEffect(() => {
+    searchClients(limite,page,query)
   }, []);
+
+  useEffect(() => {
+    getEntriesPage();
+  }, [limite]);
+
   const variabile = posts;
   console.log(posts[0]);
   console.log(variabile);
@@ -64,8 +88,7 @@ const [limite, setLimite] = useState(10)
       }
     }
   }
-  return (
-    <DataTable
+  return (    <DataTable
       table={{
         columns: [
           { Header: "CC", accessor: "codiceCliente", width: "10%" },
@@ -77,7 +100,7 @@ const [limite, setLimite] = useState(10)
         ],
         rows: baseDatiUser,
       }}
-    
+      entriesPerPage = {getEntriesPage()}
       canSearch="true"
     />
   );

@@ -84,7 +84,9 @@ function DataTable({
   useEffect(() => setPageSize(defaultValue || 10), [defaultValue]);
 
   // Set the entries per page value based on the select value
-  const setEntriesPerPage = (value) => setPageSize(value);
+  const setEntriesPerPage = (value) => {
+    setPageSize(value);
+  }
 
   // Render the paginations
   const renderPagination = pageOptions.map((option) => (
@@ -177,18 +179,21 @@ function DataTable({
                 onChange={({ currentTarget }) => {
                   setSearch(search);
                   onSearchChange(currentTarget.value);
+
                 }}
               />
             </MDBox>
           )}
         </MDBox>
       ) : null}
+
+
       <Table {...getTableProps()}>
         <MDBox component="thead">
           {headerGroups.map((headerGroup) => (
-            <TableRow {...headerGroup.getHeaderGroupProps()}>
+            <TableRow key={headerGroup.id}{...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <DataTableHeadCell
+                <DataTableHeadCell key={column.id}
                   {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
                   width={column.width ? column.width : "auto"}
                   align={column.align ? column.align : "left"}
@@ -204,9 +209,9 @@ function DataTable({
           {page.map((row, key) => {
             prepareRow(row);
             return (
-              <TableRow {...row.getRowProps()}>
+              <TableRow key={row.id} {...row.getRowProps()}>
                 {row.cells.map((cell) => (
-                  <DataTableBodyCell
+                  <DataTableBodyCell key = {cell.id}
                     noBorder={noEndBorder && rows.length - 1 === key}
                     align={cell.column.align ? cell.column.align : "left"}
                     {...cell.getCellProps()}
@@ -219,6 +224,7 @@ function DataTable({
           })}
         </TableBody>
       </Table>
+      
 
       <MDBox
         display="flex"
