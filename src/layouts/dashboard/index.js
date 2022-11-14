@@ -171,7 +171,7 @@ function Dashboard() {
         </MDBox>
       </MDBox>
       {posts.map((row) => (
-        <div>{row.Denominazione}</div>
+        <div key={row.index}>{row.Denominazione}</div>
       ))}
       <Footer />
     </DashboardLayout>
