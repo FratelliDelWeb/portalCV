@@ -49,10 +49,6 @@ connectDB();
 
 const path = require('path');
 
-app.listen(PORT, () =>
-  console.log(`Server Connected to port ${PORT}`)
-)
-
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, '../client/build')))
 
@@ -60,6 +56,10 @@ app.use(express.static(path.join(__dirname, '../client/build')))
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/../client/build/index.html'))
 })
+
+app.listen(PORT, () =>
+  console.log(`Server Connected to port ${PORT}`)
+)
 
 // Handling Error
 process.on("unhandledRejection", err => {
