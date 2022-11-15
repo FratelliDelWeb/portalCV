@@ -63,10 +63,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "heroku-frontend": "npm start",
-    "heroku-server": "cd ../server && nodemon server.js",
+    "heroku-frontend": "npm install && npm start",
+    "heroku-server": "cd ../server && npm install && nodemon server.js",
     "heroku-dev": "concurrently --kill-others-on-fail \"npm run heroku-server\" \"npm run heroku-client\"",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "concurrently \"npm install\" \"npm run build\"\"npm run heroku-server\"\"npm run heroku-frontend\""
     
   },
   "eslintConfig": {
