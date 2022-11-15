@@ -42,7 +42,18 @@
     "web-vitals": "2.1.4",
     "yargs": "^17.6.0",
     "yarn": "^1.22.19",
-    "yup": "0.32.11"
+    "yup": "0.32.11",
+    "concurrently": "^7.4.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.6.7",
+    "mssql": "^9.0.1",
+    "nodemon": "^2.0.20",
+    "tedious": "^15.1.0"
   },
   "scripts": {
     "start": "react-scripts start && (cd ../server & npm run start)",
@@ -50,7 +61,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "heroku-frontend": "cd client && npm start",
+    "heroku-server": "cd server && nodemon server.js",
+    "heroku-dev": "concurrently --kill-others-on-fail \"npm run heroku-server\" \"npm run heroku-client\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+    
   },
   "eslintConfig": {
     "extends": [
@@ -63,18 +79,6 @@
       ">0.2%",
       "not dead",
       "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "concurrently": "^7.4.0",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jsx-a11y": "6.5.1",
-    "eslint-plugin-react": "7.28.0",
-    "eslint-plugin-react-hooks": "4.3.0"
   }
 }
