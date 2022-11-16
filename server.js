@@ -43,7 +43,7 @@ app.get("/logout", (req, res) => {
   res.redirect("/")
 })
 
-const PORT = 5000;
+const PORT = process.env.port || 5000;
 
 connectDB();
 
