@@ -21,7 +21,7 @@ app.use(express.json());
 
 
 
-app.use("/api/auth", require("./Auth/route"));
+app.use("/api/auth", require("./Auth/Route"));
 app.use('/api', router);
 
 app.get('/api/users',  userAuth, usersRoute);
