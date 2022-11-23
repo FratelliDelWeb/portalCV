@@ -60,7 +60,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
+    name: "Clienti",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
@@ -84,7 +84,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Profile",
+    name: "Profilo",
     key: "profile",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
@@ -93,7 +93,7 @@ const routes = [
   {
     type: "title",
     name: "Profile",
-    key: "profile",
+    key: "profileId",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile/:id",
     component: <Profile />,

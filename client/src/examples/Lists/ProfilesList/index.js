@@ -28,9 +28,9 @@ import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
 import MDButton from "components/MDButton";
 
-function ProfilesList({ title, profiles, shadow }) {
-  const renderProfiles = profiles.map(({ image, name, description, action }) => (
-    <MDBox key={name} component="li" display="flex" alignItems="center" py={1} mb={1}>
+function ProfilesList({ title, profiles, shadow  , userToken  , onUpdateToken}) {
+  const renderProfiles = profiles.map(({ id ,image, name, description, action }) => (
+    <MDBox key={id} component="li" display="flex" alignItems="center" py={1} mb={1}>
       <MDBox mr={2}>
         <MDAvatar src={image} alt="something here" shadow="md" />
       </MDBox>
@@ -44,8 +44,9 @@ function ProfilesList({ title, profiles, shadow }) {
       </MDBox>
       <MDBox ml="auto">
         {action.type === "internal" ? (
-          <MDButton component={Link} to={action.route} variant="text" color="info">
+          <MDButton  key={userToken} onClick={() => onUpdateToken({id})} component={Link} to={action.route} variant="text" color="info">
             {action.label}
+            
           </MDButton>
         ) : (
           <MDButton
@@ -55,8 +56,10 @@ function ProfilesList({ title, profiles, shadow }) {
             rel="noreferrer"
             variant="text"
             color={action.color}
+            onClick={() => onUpdateToken(action.route)}
           >
-            {action.label}
+          {action.label}
+            
           </MDButton>
         )}
       </MDBox>
@@ -89,6 +92,8 @@ ProfilesList.propTypes = {
   title: PropTypes.string.isRequired,
   profiles: PropTypes.arrayOf(PropTypes.object).isRequired,
   shadow: PropTypes.bool,
+  userToken:  PropTypes.string,
+  onUpdateToken: PropTypes.func
 };
 
 export default ProfilesList;
