@@ -1,15 +1,22 @@
-///-- Teleoperatrici --///
+const Model = require('../../model/Telefonata');
 
 //Totale appuntamenti parlati
 exports.getAppParlati = async (req, res, next) => {
-
+    try{
+        const data = await Model.find().limit(1000);
+        res.json(data)
+    }catch(error){
+        res.status(500).json({message: error.message})
+    }
 }
 
+//A00
 //Totale appuntamenti negativi
 exports.getAppNeg = async (req, res, next) => {
 
 }
 
+//A01
 //Totale appuntamenti positivi
 exports.getAppNeg = async (req, res, next) => {
 
