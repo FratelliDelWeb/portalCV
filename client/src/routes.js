@@ -93,7 +93,7 @@ const routes = [
   {
     type: "title",
     name: "Profile",
-    key: "profile",
+    key: "profileId",
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile/:id",
     component: <Profile />,
@@ -117,7 +117,7 @@ const routes = [
   {
     type: "title",
     name: "basic",
-    key: "admin",
+    key: "basic",
     icon: <Icon fontSize="small">Basic</Icon>,
     route: "/basic",
     component: <Basic />,
