@@ -45,7 +45,7 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Basic from "layouts/basic";
 import Admin from "layouts/admin";
-
+import Cliente from "layouts/cliente";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -97,6 +97,14 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile/:id",
     component: <Profile />,
+  },
+  {
+    type: "title",
+    name: "Cliente",
+    key: "cliente",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/cliente/:id",
+    component: <Cliente />,
   },
   {
     type: "collapse",

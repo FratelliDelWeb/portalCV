@@ -27,12 +27,12 @@ import MDButton from "components/MDButton";
 // Material Dashboard 2 React context
 import { useMaterialUIController } from "context";
 
-function Bill({ name, company, email, vat, noGutter }) {
+function Bill({name, company, email, vat, noGutter }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
   return (
-    <MDBox
+    <MDBox 
       component="li"
       display="flex"
       justifyContent="space-between"
@@ -43,6 +43,8 @@ function Bill({ name, company, email, vat, noGutter }) {
       mb={noGutter ? 0 : 1}
       mt={2}
     >
+
+      
       <MDBox width="100%" display="flex" flexDirection="column">
         <MDBox
           display="flex"
@@ -89,6 +91,9 @@ function Bill({ name, company, email, vat, noGutter }) {
           </MDTypography>
         </MDTypography>
       </MDBox>
+
+
+
     </MDBox>
   );
 }
@@ -100,11 +105,13 @@ Bill.defaultProps = {
 
 // Typechecking props for the Bill
 Bill.propTypes = {
-  name: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  vat: PropTypes.string.isRequired,
+  
+  name: PropTypes.any.isRequired,
+  company: PropTypes.any.isRequired,
+  email: PropTypes.any.isRequired,
+  vat: PropTypes.any.isRequired,
   noGutter: PropTypes.bool,
 };
 
 export default Bill;
+

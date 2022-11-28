@@ -4,8 +4,9 @@ const SERVER_URL = "http://localhost:3000/";
 const authUrl = "/api/auth/"
 
 const urlUsersList =  "api/users";
-
+const urlClientList =  "api/clienti";
 const usersInformationUrl = (id) =>  `api/users/${id}`
+const clientInformationUrl = (id) =>  `api/clienti/${id}`
 
  
 const generateUrl = (url, params = []) => { 
@@ -27,8 +28,9 @@ export {
     SERVER_URL,
     authUrl,
     urlUsersList,
+    urlClientList,
     generateUrl,
-    usersInformationUrl
- 
+    usersInformationUrl,
+    clientInformationUrl
 };
 
