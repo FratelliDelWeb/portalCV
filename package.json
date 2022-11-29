@@ -5,7 +5,7 @@
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"cd client && npm start\"",
     "heroku-postbuild": "npm --prefix ./client install && npm --prefix ./client run build",
-    "start-fe" : "cd client && npm start"
+    "start-fe": "cd client && npm start"
   },
   "dependencies": {
     "2": "^3.0.0",
@@ -41,6 +41,7 @@
     "react-table": "7.7.0",
     "stylis": "4.0.13",
     "tedious": "^15.1.0",
+    "twilio": "^3.83.3",
     "web-vitals": "2.1.4",
     "yargs": "^17.6.0",
     "yarn": "^1.22.19",

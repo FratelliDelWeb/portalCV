@@ -19,8 +19,20 @@ const AppuntamentoSchema = new Mongoose.Schema({
     type: String,
   },
   Note: {
-    type: String,
-  }
+    type: String
+  },
+  CodiceAgenzia: {
+    type: Number
+  },
+  CodiceCollaboratore : {
+    type: String
+  },
+  ImportoAcquistato : {
+    type: Number
+  },
+  ImportoRata : {
+    type: Number
+  },
 })
 
 const Appuntamento = Mongoose.model("Appuntamenti", AppuntamentoSchema)

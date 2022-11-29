@@ -21,10 +21,7 @@ const TelefonataSchema = new Mongoose.Schema({
   OpereAcquistate: {
     type: String
   },
-  ImportoAcquistato : {
-    type: Number
-  },
-  ImportoRata : {
+  CodiceAgenzia: {
     type: Number
   },
 })
