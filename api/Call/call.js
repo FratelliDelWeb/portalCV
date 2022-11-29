@@ -3,13 +3,14 @@ const accountSid = "AC4778cf86c941a7daa50da538f5c7a628";
 const authToken = "1c011286de397265218b9ed1867370a8";
 const client = require('twilio')(accountSid, authToken);
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
+const url = "https://mirabillia-teleportal.herokuapp.com/api/call/request"
 
 
 exports.makeCall = async (req, res, next) => {
     try{
         client.calls
         .create({
-            url: req.headers.host + '/api/call/request',
+            url: url,
             to: '+393519907274',
             from: from
         })
