@@ -100,10 +100,10 @@ const routes = [
   },
   {
     type: "title",
-    name: "Cliente",
-    key: "cliente",
+    name: "Clienti",
+    key: "clienti",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/cliente/:id",
+    route: "/clienti/:id",
     component: <Cliente />,
   },
   {

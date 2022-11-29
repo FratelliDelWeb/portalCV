@@ -41,7 +41,6 @@ import Header from "layouts/profile/components/Header";
 import React, { useState, useEffect } from "react";
 import { getUsersInfo , getUsersList } from "service/users.service";
 import { useParams } from 'react-router-dom';
-import ProfilesHeadersDetails from '../../components/ProfiloHeadersDetails/index';
 
 
 const  Overview = () =>  {
