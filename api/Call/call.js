@@ -2,7 +2,7 @@ const from = '+16402213496';
 const accountSid = "AC4778cf86c941a7daa50da538f5c7a628";
 const authToken = "1c011286de397265218b9ed1867370a8";
 const client = require('twilio')(accountSid, authToken);
-const VoiceResponse = require('twilio')(accountSid, authToken).twiml.VoiceResponse;
+const VoiceResponse = require('twilio').twiml.VoiceResponse;
 const url = "https://mirabillia-teleportal.herokuapp.com/api/call/request"
 const local = "http://localhost:5000/api/call/request"
 
