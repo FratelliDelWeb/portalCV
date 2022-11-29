@@ -40,5 +40,5 @@ exports.returnTwiml = async (req, res, next) => {
     const response = new VoiceResponse();
     const dial = response.dial();
     dial.number('+393923784332');
-    res.send(response.toString());
+    res.send(response);
 }
