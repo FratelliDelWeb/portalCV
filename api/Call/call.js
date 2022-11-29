@@ -11,7 +11,7 @@ exports.makeCall = async (req, res, next) => {
     try{
         client.calls
         .create({
-            url: "https://mirabillia-teleportal.herokuapp.com/api/call/request",
+            url: "https://handler.twilio.com/twiml/EH3e70a051af8cab6d6322e861df62a06c",
             to: '+393519907274',
             from: from,
             timeout: 15
