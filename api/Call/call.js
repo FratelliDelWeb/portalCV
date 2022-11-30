@@ -13,6 +13,8 @@ exports.makeCall = async (req, res, next) => {
     try{
         client.calls
         .create({
+            method: "POST",
+            url: url,
             to: '+393519907274',
             from: from,
             timeout: 15
