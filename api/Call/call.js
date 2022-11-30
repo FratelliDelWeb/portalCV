@@ -8,6 +8,8 @@ const local = "http://localhost:5000/api/call/request"
 
 
 exports.makeCall = async (req, res, next) => {
+    console.log("Stampo il client =>")
+    console.log(client);
     try{
         client.calls
         .create({
@@ -15,11 +17,12 @@ exports.makeCall = async (req, res, next) => {
             from: from,
             timeout: 15
         })
-        .then(call => { 
+        .then(call => {
+            console.log("Call runned =>")
             console.log(call)
+            console.log('Call finished, return response')
             res.json({call: call})
         });
-        console.log('ok')
     }catch(error){
         console.log(error)
         res.status(500).json({message: error.message})
@@ -41,6 +44,7 @@ exports.returnTwiml = async (req, res, next) => {
     const response = new VoiceResponse();
     const dial = response.dial();
     dial.number('+393923784332');
+    console.log(response.toString())
     res.status(200).contentType('text/xml') 
     .send(response.toString());
 }
