@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { makeCall, addCallerID, returnTwiml } = require("./call");
-router.route('/api/call').post(makeCall);
-router.route('/api/call/request').post(returnTwiml);
+const { call, returnTwiml } = require("./call");
+router.route('/api/call').post(call);
+router.route('/api/outbound/:salesNumber').post(returnTwiml);
 /* router.route('/api/call/antonioM').post(addCallerID); */
 module.exports = router;
