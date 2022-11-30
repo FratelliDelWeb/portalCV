@@ -53,7 +53,7 @@ app.post('/api/appuntamenti/modify', userAuth, appuntamentiRoute);
 app.post('/api/search/appuntamenti', userAuth, appuntamentiRoute);
 
 app.post('/api/call', userAuth, callRoute);
-app.post('/api/call/request', userAuth, callRoute);
+app.post('/api/call/request', callRoute);
 app.post('/api/call/antonioM', userAuth, callRoute);
 
 app.get("/admin", adminAuth, (req, res) => res.send({
