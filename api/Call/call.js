@@ -14,7 +14,7 @@ const TwilioClient = {
             from: from,
             url: url,
         };
-        return client.calls.create(options)
+        client.calls.create(options)
           .then((message) => {
             console.log(message.responseText);
             return Promise.resolve('Thank you! We will be calling you shortly.')
@@ -66,6 +66,6 @@ exports.addCallerID = async (req, res, next) => {
 }
 
 exports.returnTwiml = async (req, res, next) => {
-    let result = new VoiceResponse(req.params.salesNumber);
+    let result = TwilioClient.voiceResponse(req.params.salesNumber);
     res.send(result);
 }
