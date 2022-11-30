@@ -7,13 +7,19 @@ const from = '+16402213496';
 const local = "http://localhost:5000/api/call/request" */
 
 const TwilioClient = {
-    createCall: (salesNumber, phoneNumber, headersHost) => {
-        let url = headersHost + '/outbound/' + encodeURIComponent(salesNumber);
+    createCall: (salesNumber, phoneNumber) => {
+        let url = "https://mirabillia-teleportal.herokuapp.com/api" + '/outbound/' + encodeURIComponent(salesNumber);
         let options = {
             to: phoneNumber,
             from: from,
             url: url,
         };
+        console.log("url =>")
+        console.log(url)
+        console.log("options =>")
+        console.log(options)
+        console.log("client =>")
+        console.log(client)
         client.calls.create(options)
           .then((message) => {
             console.log(message.responseText);
@@ -44,9 +50,8 @@ exports.call = async (req, res, next) => {
       // Here, we just use the host for the application making the request,
       // but you can hard code it or use something different if need be
       // For local development purposes remember to use ngrok and replace the headerHost
-    let headersHost = 'http://' + req.headers.host;
 
-    TwilioClient.createCall(salesNumber, phoneNumber, headersHost)
+    TwilioClient.createCall(salesNumber, phoneNumber)
     .then((result) => {
         res.send({message: result});
     })
@@ -57,7 +62,7 @@ exports.call = async (req, res, next) => {
 
 exports.addCallerID = async (req, res, next) => {
     try{
-        TwilloClient.validationRequests
+        client.validationRequests
         .create({friendlyName: 'Antonio Maretta', phoneNumber: '+393519907274'})
         .then(validation_request => console.log(validation_request.friendlyName));
     }catch(error){
