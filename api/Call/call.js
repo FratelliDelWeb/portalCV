@@ -8,19 +8,22 @@ const local = "http://localhost:5000/api/call/request" */
 
 const TwilioClient = {
     createCall: (salesNumber, phoneNumber) => {
+
         let url = "https://mirabillia-teleportal.herokuapp.com/api" + '/outbound/' + encodeURIComponent(salesNumber);
         let options = {
             to: phoneNumber,
             from: from,
             url: url,
         };
+
         console.log("url =>")
         console.log(url)
         console.log("options =>")
         console.log(options)
         console.log("client =>")
         console.log(client)
-        client.calls.create(options)
+
+        return client.calls.create(options)
           .then((message) => {
             console.log(message.responseText);
             return Promise.resolve('Thank you! We will be calling you shortly.')
@@ -46,11 +49,7 @@ exports.call = async (req, res, next) => {
     let salesNumber = req.body.salesNumber;
     let phoneNumber = req.body.phoneNumber;
 
-      // This should be the publicly accessible URL for your application
-      // Here, we just use the host for the application making the request,
-      // but you can hard code it or use something different if need be
-      // For local development purposes remember to use ngrok and replace the headerHost
-
+    console.log('TwillioClient =>')
     TwilioClient.createCall(salesNumber, phoneNumber)
     .then((result) => {
         res.send({message: result});
