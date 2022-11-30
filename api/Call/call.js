@@ -9,7 +9,7 @@ const local = "http://localhost:5000/api/call/request" */
 const TwilioClient = {
     createCall: async (salesNumber, phoneNumber) => {
 
-        let url = "https://mirabillia-teleportal.herokuapp.com/api" + '/outbound/' + encodeURIComponent(salesNumber);
+        let url = "https://mirabillia-teleportal.herokuapp.com/api" + '/outbound/' + salesNumber;
         let options = {
             to: phoneNumber,
             from: from,
