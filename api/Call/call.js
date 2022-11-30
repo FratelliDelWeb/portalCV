@@ -2,16 +2,16 @@ const accountSid = "AC4778cf86c941a7daa50da538f5c7a628";
 const authToken = "1c011286de397265218b9ed1867370a8";
 const client = require('twilio')(accountSid, authToken);
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
+const from = '+16402213496';
 /* const url = "https://mirabillia-teleportal.herokuapp.com/api/call/request"
-const local = "http://localhost:5000/api/call/request"
-const from = '+16402213496'; */
+const local = "http://localhost:5000/api/call/request" */
 
 const TwilioClient = {
     createCall: (salesNumber, phoneNumber, headersHost) => {
         let url = headersHost + '/outbound/' + encodeURIComponent(salesNumber);
         let options = {
             to: phoneNumber,
-            from: config.twilioNumber,
+            from: from,
             url: url,
         };
         return client.calls.create(options)
@@ -24,7 +24,7 @@ const TwilioClient = {
             return Promise.reject(error);
           });
       },
-      
+
       voiceResponse: (salesNumber, Voice = VoiceResponse) => {
         let twimlResponse = new Voice();
         twimlResponse.say('Thanks for contacting our sales department. Our ' +
