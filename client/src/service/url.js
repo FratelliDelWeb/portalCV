@@ -5,12 +5,14 @@ const authUrl = "/api/auth/"
 
 const urlUsersList =  "api/users";
 const urlClientList =  "api/clienti";
-const usersInformationUrl = (id) =>  `api/users/${id}`
-const clientInformationUrl = (id) =>  `api/clienti/${id}`
+const modifyInformationClient = "api/clienti/modify";
+const usersInformationUrl = (id) =>  `api/users/${id}`;
+const clientInformationUrl = (id) =>  `api/clienti/${id}`;
 
  
 const generateUrl = (url, params = []) => { 
     const urlServerWithAuth = `${SERVER_URL}${url}`;
+   
     console.log(urlServerWithAuth)
    /*  if(params && params.length > 0){
         let paramsUrl = new URLSearchParams();
@@ -29,8 +31,10 @@ export {
     authUrl,
     urlUsersList,
     urlClientList,
+    modifyInformationClient,
     generateUrl,
     usersInformationUrl,
     clientInformationUrl
 };
+
 

@@ -15,7 +15,8 @@ import Footer from "examples/Footer";
 import ProfilesList from "examples/Lists/ProfilesList";
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
-import { getClientInfo , getAllClient} from "service/clients.service";
+
+import { getClientInfo , getAllClient, modifyClient} from "service/clients.service";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import Card from "@mui/material/Card";
@@ -45,8 +46,16 @@ const [loading,setLoading] = useState(true);
     console.log(newValue);
     setTabValue(newValue)};
 
+ 
+    
+ 
+    
+
   useEffect(() => {
     setIdCliente() 
+
+
+
   },[QueryClienteId])
 
   
@@ -59,6 +68,7 @@ const [loading,setLoading] = useState(true);
     console.log(QueryClienteId)
     getClient();  
    }
+   
    const getClient = async (profiloCliente) => {
     const data = await  getClientInfo(QueryClienteId);
     setDatiCliente(data);
@@ -156,7 +166,7 @@ const setDatiCliente = (data) => {
                     {tabValue < 1 && 
 
                     <MDBox>
-                      <ClientiInfo Cliente={profiloCliente} tab={setTab}></ClientiInfo>
+                      <ClientiInfo Cliente={profiloCliente} setTab={setTab}></ClientiInfo>
                     </MDBox>
 
                     }
@@ -180,7 +190,7 @@ const setDatiCliente = (data) => {
                     {tabValue === 2 && 
 
                     <MDBox>
-                    <ClientiInfoEdit Cliente={profiloCliente} tab={setTab}></ClientiInfoEdit>
+                    <ClientiInfoEdit Cliente={profiloCliente}  setCliente={setIdCliente} setTab={setTab}></ClientiInfoEdit>
                     </MDBox>
 
                     }
