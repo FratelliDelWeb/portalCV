@@ -53,6 +53,7 @@ app.post('/api/appuntamenti/modify', userAuth, appuntamentiRoute);
 app.post('/api/search/appuntamenti', userAuth, appuntamentiRoute);
 
 app.post('/api/call', userAuth, callRoute);
+app.post('/api/call/token', userAuth, callRoute);
 app.post('/api/outbound/:salesNumber', callRoute);
 app.post('/api/call/antonioM', userAuth, callRoute);
 

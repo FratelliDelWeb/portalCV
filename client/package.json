@@ -43,7 +43,10 @@
     "web-vitals": "2.1.4",
     "yargs": "^17.6.0",
     "yarn": "^1.22.19",
-    "yup": "0.32.11"
+    "yup": "0.32.11",
+    "twilio-client": "^1.14.0",
+    "twilio": "^3.83.3",
+    "@twilio/voice-sdk": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

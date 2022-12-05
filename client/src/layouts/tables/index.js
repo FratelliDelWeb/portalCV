@@ -21,6 +21,7 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import TableClienti from "components/TableClienti"
+import Device from "components/TwilioDevice";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -60,6 +61,7 @@ function Tables() {
               <MDBox pt={3}>
                 <TableClienti
                 />
+                <Device/>
               </MDBox>
             </Card>
           </Grid>
