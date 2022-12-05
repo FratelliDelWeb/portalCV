@@ -7,7 +7,7 @@ import MDButton from "components/MDButton";
 import Icon from "@mui/material/Icon";
 import PropTypes from "prop-types";
 
-const ClientiInfo = ({Cliente,tab}) => {
+const ClientiInfo = ({Cliente,setTab}) => {
 
 return(<MDBox>
      {Cliente.user.map((row) => {
@@ -194,7 +194,7 @@ return(<MDBox>
     <Grid item xs={12} display="flex" alignItems="flex-end" md={12} xl={12} >
 
       
-<MDButton color="light" onClick={() => tab(null,2)} p={1} >
+<MDButton color="light" onClick={() => setTab(null,2)} p={1} >
 <Icon>edit</Icon>&nbsp;  Mocdifica 
 </MDButton>
 <MDButton color="error"  p={1}>
@@ -211,7 +211,7 @@ return(<MDBox>
 ClientiInfo.propTypes = {
   
     Cliente: PropTypes.object,
-    tab: PropTypes.func
+    setTab: PropTypes.func
   };
 
 

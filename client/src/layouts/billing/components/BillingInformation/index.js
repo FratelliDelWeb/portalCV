@@ -74,7 +74,7 @@ function BillingInformation({UserListToCall}) {
                     </MDButton>
                   </MDBox>
                   <MDButton  component="a"
-            href={`clienti/${row._id}`}
+            href={`clients/${row._id}`}
             rel="noreferrer"
             infoCliente={row}
              variant="text" color={"dark"}>

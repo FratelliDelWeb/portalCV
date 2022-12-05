@@ -2,7 +2,7 @@ const Model = require('../../model/Cliente');
 
 exports.getAllClients = async (req, res, next) => {
     try{
-        const data = await Model.find({ Telefono1: { $ne: null } , Email: { $ne: null }  }).limit(10);
+        const data = await Model.find({ Telefono1: { $ne: ""} }).limit(10);
         res.json(data)
     }catch(error){
         res.status(500).json({message: error.message})

@@ -7,11 +7,27 @@ const getService = async (url) => {
 
 
 
-const getServiceHeaders = async (url,params) => {
-    const api = await fetch(url)
+const getServiceHeaders = async (url , dati) => {
+    let datas;
+    fetch(url, {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(
+            dati
+        ),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data, "userRegister");
+          datas = data
+        });
 
-    const data = await api.json();
-    return data;
+        return datas;
 }
 
 export { getService, getServiceHeaders }

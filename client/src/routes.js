@@ -103,7 +103,7 @@ const routes = [
     name: "Clienti",
     key: "clienti",
     icon: <Icon fontSize="small">person</Icon>,
-    route: "/clienti/:id",
+    route: "/clients/:id",
     component: <Cliente />,
   },
   {
