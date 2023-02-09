@@ -46,10 +46,19 @@ import SignUp from "layouts/authentication/sign-up";
 import Basic from "layouts/basic";
 import Admin from "layouts/admin";
 import Cliente from "layouts/cliente";
+import Home  from "layouts/sitoPubblico/home";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
 const routes = [
+  {
+    type: "title",
+    name: "Home",
+    key: "home",
+    icon: <Icon fontSize="small">home</Icon>,
+    route: "/home",
+    component: <Home />,
+  },
   {
     type: "collapse",
     name: "Dashboard",
@@ -125,7 +134,7 @@ const routes = [
   {
     type: "title",
     name: "basic",
-    key: "admin",
+    key: "basic",
     icon: <Icon fontSize="small">Basic</Icon>,
     route: "/basic",
     component: <Basic />,
