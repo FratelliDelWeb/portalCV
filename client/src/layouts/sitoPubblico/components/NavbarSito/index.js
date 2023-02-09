@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-
+import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink";
 const pages = ['Candidati'];
 const settings = ['Contatti'];
 
@@ -106,23 +106,18 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <DefaultNavbarLink  icon="user" name="Contatti" route="/contatti"  />
+                  <DefaultNavbarLink  icon="key" name="Accedi" route="/authentication/sign-in"  />
+
                 </MenuItem>
               ))}
             </Menu>
           </Box>
           <Box  sx={{flexGrow: 1, display: { xs: 'none', md: 'flex'} ,justifyContent: 'flex-end'}}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
+          <DefaultNavbarLink  icon="user" name="Contatti" route="/contatti"  />
+          <DefaultNavbarLink  icon="key" name="Accedi" route="/authentication/sign-in"  />
 
+          </Box>
          {/*  <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

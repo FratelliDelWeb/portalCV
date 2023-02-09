@@ -14,15 +14,12 @@ function Contatti() {
         <Grid container spacing={1}  height="100%">
           <Grid item xs={11} sm={9} md={5} lg={6} xl={6}>
             <MDBox mt={10} p={4} shadow="xl" borderRadius="xl">
-            TESTO
+              CONTATTACI
+              3519907274
             </MDBox>
       
           </Grid>
-          <Grid item xs={11} sm={9} md={5} lg={6} xl={6}>
-          <MDBox mt={10} p={4} shadow="xl" borderRadius="xl">
-            TESTO
-            </MDBox>
-          </Grid>
+        
         </Grid>
       </MDBox>
      

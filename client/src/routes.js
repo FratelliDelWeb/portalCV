@@ -47,6 +47,8 @@ import Basic from "layouts/basic";
 import Admin from "layouts/admin";
 import Cliente from "layouts/cliente";
 import Home  from "layouts/sitoPubblico/home";
+import Contatti  from "layouts/sitoPubblico/contatti";
+
 // @mui icons
 import Icon from "@mui/material/Icon";
 
@@ -58,6 +60,14 @@ const routes = [
     icon: <Icon fontSize="small">home</Icon>,
     route: "/home",
     component: <Home />,
+  },
+  {
+    type: "title",
+    name: "Contatti",
+    key: "Contatti",
+    icon: <Icon fontSize="small">Contatti</Icon>,
+    route: "/contatti",
+    component: <Contatti />,
   },
   {
     type: "collapse",

@@ -113,7 +113,7 @@ const  Overview = () =>  {
               id: data._id,
               name: data.username,
               Email: data.email,
-              professione : data.professione,
+              professione : data.role,
             };
   }
 
