@@ -11,10 +11,13 @@ const candidatoSchema = new Mongoose.Schema({
     type: String,
     required: true,
   },
-  age: {
+  phone: {
     type: Number,
     required: true,
-    integer: true,
+  },
+  telephone: {
+    type: Number,
+    required: true,
   },
   documents: [Document.schema],
 });

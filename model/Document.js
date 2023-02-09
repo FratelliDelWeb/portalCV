@@ -2,11 +2,11 @@ var mongoose = require("mongoose");
 
 var documentSchema = new mongoose.Schema({
   // no _id designation, mongo will create
-  titolo: {
+  title: {
     type: String,
     required: true,
   },
-  desc: {
+  desccription: {
     type: String,
     required: true,
   },

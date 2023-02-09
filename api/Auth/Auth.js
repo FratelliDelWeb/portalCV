@@ -1,7 +1,8 @@
-const User = require("../model/User");
+const User = require("../../model/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const jwtSecret = "4715aed3c946f7b0a38e6b534a9583628d84e96d10fbc04700770d572af3dce43625dd";
+const jwtSecret =
+  "4715aed3c946f7b0a38e6b534a9583628d84e96d10fbc04700770d572af3dce43625dd";
 
 exports.register = async (req, res, next) => {
   const { username, password } = req.body;
@@ -15,9 +16,13 @@ exports.register = async (req, res, next) => {
     })
       .then((user) => {
         const maxAge = 3 * 60 * 60;
-        const token = jwt.sign({ id: user._id, username, role: user.role }, jwtSecret, {
-          expiresIn: maxAge, // 3hrs in sec
-        });
+        const token = jwt.sign(
+          { id: user._id, username, role: user.role },
+          jwtSecret,
+          {
+            expiresIn: maxAge, // 3hrs in sec
+          }
+        );
         res.cookie("jwt", token, {
           httpOnly: true,
           maxAge: maxAge * 1000, // 3hrs in ms
@@ -56,9 +61,13 @@ exports.login = async (req, res, next) => {
       bcrypt.compare(password, user.password).then(function (result) {
         if (result) {
           const maxAge = 3 * 60 * 60;
-          const token = jwt.sign({ id: user._id, username, role: user.role }, jwtSecret, {
-            expiresIn: maxAge, // 3hrs in sec
-          });
+          const token = jwt.sign(
+            { id: user._id, username, role: user.role },
+            jwtSecret,
+            {
+              expiresIn: maxAge, // 3hrs in sec
+            }
+          );
           res.cookie("jwt", token, {
             httpOnly: true,
             maxAge: maxAge * 1000, // 3hrs in ms
@@ -69,7 +78,9 @@ exports.login = async (req, res, next) => {
             role: user.role,
           });
         } else {
-          res.status(400).json({ message: "Login not succesful", userRole: user.role });
+          res
+            .status(400)
+            .json({ message: "Login not succesful", userRole: user.role });
         }
       });
     }
@@ -98,7 +109,9 @@ exports.update = async (req, res, next) => {
             user.save((err) => {
               //Monogodb error checker
               if (err) {
-                res.status("400").json({ message: "An error occurred", error: err.message });
+                res
+                  .status("400")
+                  .json({ message: "An error occurred", error: err.message });
                 process.exit(1);
               }
               res.status("201").json({ message: "Update successful", user });
@@ -108,7 +121,9 @@ exports.update = async (req, res, next) => {
           }
         })
         .catch((error) => {
-          res.status(400).json({ message: "An error occurred", error: error.message });
+          res
+            .status(400)
+            .json({ message: "An error occurred", error: error.message });
         });
     }
   }
@@ -118,8 +133,14 @@ exports.deleteUser = async (req, res, next) => {
   const { id } = req.body;
   await User.findById(id)
     .then((user) => user.remove())
-    .then((user) => res.status(201).json({ message: "User successfully deleted", user }))
-    .catch((error) => res.status(400).json({ message: "An error occurred", error: error.message }));
+    .then((user) =>
+      res.status(201).json({ message: "User successfully deleted", user })
+    )
+    .catch((error) =>
+      res
+        .status(400)
+        .json({ message: "An error occurred", error: error.message })
+    );
 };
 
 exports.getUsers = async (req, res, next) => {
@@ -133,5 +154,7 @@ exports.getUsers = async (req, res, next) => {
       });
       res.status(200).json({ user: userFunction });
     })
-    .catch((err) => res.status(401).json({ message: "Not successful", error: err.message }));
+    .catch((err) =>
+      res.status(401).json({ message: "Not successful", error: err.message })
+    );
 };

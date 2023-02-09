@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const connectDB = require("./db");
 
-const clientsRoute = require("./api/Candidati/route");
+const candidatesRoute = require("./api/Candidati/route");
 const usersRoute = require("./api/Users/route");
 /* const appuntamentiRoute = require("./api/Appuntamenti/route"); */
 
@@ -19,16 +19,15 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/api/auth", require("./Auth/Route"));
+app.use("/api/auth", require("./api/Auth/Route"));
 app.use("/api", router);
 
 app.get("/api/users", userAuth, usersRoute);
 app.get("/api/users/:id", userAuth, usersRoute);
 
-app.get("/api/clienti", userAuth, clientsRoute);
-app.get("/api/clienti/:id", userAuth, clientsRoute);
-app.post("/api/clienti/modify", userAuth, clientsRoute);
-app.post("/api/search/clients", userAuth, clientsRoute);
+app.get("/api/candidates", userAuth, candidatesRoute);
+app.get("/api/candidates/:id", userAuth, candidatesRoute);
+app.post("/api/search/candidates", userAuth, candidatesRoute);
 
 /* app.get("/api/telefonate", userAuth, telefonateRoute);
 app.get("/api/telefonate/:id", userAuth, telefonateRoute);
