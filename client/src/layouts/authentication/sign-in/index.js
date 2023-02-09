@@ -21,7 +21,7 @@ import { Component } from "react";
 import Card from "@mui/material/Card";
 
 
-// Material Dashboard 2 React components
+// Material Dashboard 2 React componentsf
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";

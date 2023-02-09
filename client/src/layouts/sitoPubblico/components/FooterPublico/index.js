@@ -1,16 +1,34 @@
+/**
+=========================================================
+* Material Dashboard 2 React - v2.1.0
+=========================================================
 
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+
+// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
+// @mui material components
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 
+// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
+// Material Dashboard 2 React base styles
 import typography from "assets/theme/base/typography";
 
-function Footer({ light }) {
+function FooterPubblico({light} ) {
   const { size } = typography;
 
   return (
@@ -42,7 +60,7 @@ function Footer({ light }) {
             fontSize={size.sm}
           >
             &copy; {new Date().getFullYear()}, made with
-            <MDBox fontSize={size.md} color={light ? "white" : "dark"} mb={-0.5} mx={0.25}>
+            <MDBox fontSize={size.md} color={light ? "white" : "dark"} mb={-1} mx={0.50}>
               <Icon color="inherit" fontSize="inherit">
                 favorite
               </Icon>
@@ -62,13 +80,13 @@ function Footer({ light }) {
 }
 
 // Setting default props for the Footer
-Footer.defaultProps = {
+FooterPubblico.defaultProps = {
   light: false,
 };
 
 // Typechecking props for the Footer
-Footer.propTypes = {
+FooterPubblico.propTypes = {
   light: PropTypes.bool,
 };
 
-export default Footer;
+export default FooterPubblico;

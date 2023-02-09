@@ -1,5 +1,6 @@
-const Mongoose = require("mongoose")
+const Mongoose = require("mongoose");
 const UserSchema = new Mongoose.Schema({
+  // no _id designation, mongo will create
   username: {
     type: String,
     unique: true,
@@ -20,12 +21,7 @@ const UserSchema = new Mongoose.Schema({
     default: "-",
     required: true,
   },
-  professione: {
-    type: String,
-    default: "-",
-    required: true,
-  },
-})
+});
 
-const User = Mongoose.model("user", UserSchema)
-module.exports = User
+const User = Mongoose.model("users", UserSchema);
+module.exports = User;
