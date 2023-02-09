@@ -86,47 +86,12 @@ console.log("valore");
 const setDatiCliente = (data) => {
     DatiCliente[0]= {
       id: data._id,
-      nomeCliente: data.Denominazione,
-      CAP:data.CAP,
-      CAP2:data.CAP2,
-      Categoria:data.Categoria,
-      ClienteID: data.ClienteID,
-      CodiceAgenzia: data.CodiceAgenzia,
-      CodiceCliente:data.CodiceCliente,
-     CodiceCollab: data.CodiceCollab,
-    CodiceFiscale: data.CodiceFiscale,
-    Contattabile:data.Contattabile,
-    ContattoID:data.ContattoID,
-    DataAggiornamentoSaldo:data.DataAggiornamentoSaldo,
-    DataNascita:data.DataNascita,
-    DataRichiamo:data.DataRichiamo,
-    Denominazione:data.Denominazione,
-    Email:data.Email,
-    Fax:data.Fax,
-    IBAN:data.IBAN,
-    ImportoRata:data.ImportoRata,
-    ImportoRataStorica:data.ImportoRataStorica,
-    ImportoSaldoAttualizzato:data.ImportoSaldoAttualizzato,
-    ImportoSaldoContabile:data.ImportoSaldoContabile,
-    ImportoSaldoStorico:data.ImportoSaldoStorico,
-    Indirizzo:data.Indirizzo,
-    Indirizzo2:data.Indirizzo2,
-    Località:data.Località,
-    Località2:data.Località2,
-    Note:data.Note,
-    Operatore:data.Operatore,
-    PartitaIVA:data.PartitaIVA,
-    Provincia:data.Provincia,
-    Provincia2:data.Provincia2,
-    Sesso:data.Sesso,
-    Telefono1:data.Telefono1,
-    Telefono2:data.Telefono2,
-    TipoCliente:data.TipoCliente,
-    TipoContoStorico:data.TipoContoStorico,
-    TipoPagamentoStorico:data.TipoPagamentoStorico,
-    TipoRagioneSociale:data.TipoRagioneSociale,
-    TitoloAcc:data.TitoloAcc
-
+      name: data.name,
+      cognome:data.surname,
+      email:data.email,
+      cellulare:data.phone,
+      telefono:data.telephone,
+      curriculum:data.documents
 }
 }
     return (
@@ -153,7 +118,7 @@ const setDatiCliente = (data) => {
                     <MDBox display="block" >
                     <MDBadge badgeContent="Lista iorio" container />
                     <MDTypography variant="h5"  fontWeight="bold" >
-                    Cliente: {row.Denominazione} - {row.ClienteID}
+                    Cliente: {row.name} - {row.cognome}
                     </MDTypography>
                     </MDBox>
                     <MDBox display="block" >

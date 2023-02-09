@@ -135,7 +135,7 @@ function Configurator() {
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5">MyPortal MIRABILIA</MDTypography>
+          <MDTypography variant="h5">MyPortal Innovation Job</MDTypography>
           <MDTypography variant="body2" color="text">
             Impostazioni
           </MDTypography>
@@ -160,7 +160,7 @@ function Configurator() {
 
       <MDBox pt={0.5} pb={3} px={3}>
         <MDBox>
-          <MDTypography variant="h6">Sidenav Colors</MDTypography>
+          <MDTypography variant="h6">Colori Barra laterale</MDTypography>
 
           <MDBox mb={0.5}>
             {sidenavColors.map((color) => (

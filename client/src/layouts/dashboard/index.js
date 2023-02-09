@@ -41,7 +41,7 @@ function Dashboard() {
 
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    fetch("/api/clienti")
+    fetch("/api/candidates")
       .then((response) => response.json())
       .then((data) => {
     
@@ -53,7 +53,7 @@ function Dashboard() {
   const variabile = posts.length;
   console.log(posts);
   console.log(variabile);
-  console.log(variabile.length);
+  /* console.log(variabile.length); */
 
   return (
     <DashboardLayout>

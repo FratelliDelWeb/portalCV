@@ -79,14 +79,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Clienti",
+    name: "Candidati",
     key: "tables",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Billing",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
@@ -94,7 +94,7 @@ const routes = [
     component: <Billing />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Notifications",
     key: "notifications",
     icon: <Icon fontSize="small">notifications</Icon>,
@@ -126,7 +126,7 @@ const routes = [
     component: <Cliente />,
   },
   {
-    type: "collapse",
+    type: "title",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -138,7 +138,7 @@ const routes = [
     name: "Log out",
     key: "log-out",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/authentication/sign-up",
+    route: "/home",
     component: <SignUp />,
   },
   {

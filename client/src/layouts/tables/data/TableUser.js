@@ -35,7 +35,7 @@ export default function TableUser() {
         operation: "is not empty"
     }}) => {
     
-    fetch("api/search/clients",{
+    fetch("api/search/candidates",{
       method: "POST",
       crossDomain: true,
       headers: {

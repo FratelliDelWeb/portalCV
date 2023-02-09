@@ -66,7 +66,7 @@ export default function TableClienti() {
     let page = search.page;
     let query = search.query;
 
-    fetch("api/search/clients",{
+    fetch("api/search/candidates",{
         method: "POST",
         crossDomain: true,
         headers: {

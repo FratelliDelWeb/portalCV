@@ -29,7 +29,7 @@ return(<MDBox>
             Nome:&nbsp;
         </MDTypography>
         <MDTypography variant="button">
-        {row.nomeCliente}
+        {row.name}
            </MDTypography>
         </MDBox>
         <MDBox mb={1} display="flex"  alignItems="center" lineHeight={0}>        
@@ -37,16 +37,16 @@ return(<MDBox>
             Email:&nbsp;
         </MDTypography>
         <MDTypography variant="button">
-        {row.Email}
+        {row.email}
            </MDTypography>
         </MDBox>
 
         <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"  alignItems="center" color="text">
-            Telefono:&nbsp;
+            Cellulare:&nbsp;
         </MDTypography>
         <MDTypography variant="button">
-        {row.Telefono1} 
+        {row.cellulare} 
            </MDTypography>
         </MDBox>
    
@@ -56,7 +56,7 @@ return(<MDBox>
             Telefono:&nbsp;
         </MDTypography>
         <MDTypography variant="button">
-        {row.CodiceFiscale}
+        {row.telefono}
            </MDTypography>
         </MDBox>
 

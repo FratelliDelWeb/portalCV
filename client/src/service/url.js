@@ -4,10 +4,10 @@ const SERVER_URL = "http://localhost:3000/";
 const authUrl = "/api/auth/"
 
 const urlUsersList =  "api/users";
-const urlClientList =  "api/clienti";
-const modifyInformationClient = "api/clienti/modify";
+const urlClientList =  "api/candidates";
+const modifyInformationClient = "api/candidates/modify";
 const usersInformationUrl = (id) =>  `api/users/${id}`;
-const clientInformationUrl = (id) =>  `api/clienti/${id}`;
+const clientInformationUrl = (id) =>  `api/candidates/${id}`;
 
  
 const generateUrl = (url, params = []) => { 

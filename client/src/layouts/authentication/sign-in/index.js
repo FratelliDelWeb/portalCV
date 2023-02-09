@@ -119,7 +119,7 @@ export default class Basic extends Component {
             textAlign="center"
           >
              <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              MyPortal - Mirabilia
+              MyPortal Innovation Job
             </MDTypography>
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               ACCEDI

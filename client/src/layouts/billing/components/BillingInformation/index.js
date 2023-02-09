@@ -63,7 +63,7 @@ function BillingInformation({UserListToCall}) {
 
 
                 <MDTypography variant="button" fontWeight="medium" textTransform="capitalize">
-                {row.Denominazione}
+                {row.name}   {row.surname}
                 </MDTypography>
             
 
@@ -98,7 +98,7 @@ function BillingInformation({UserListToCall}) {
                 <MDTypography variant="caption" color="text">
                   Telefono:&nbsp;&nbsp;&nbsp;
                   <MDTypography variant="caption" fontWeight="medium" textTransform="capitalize">
-                    {row.Telefono1}
+                    {row.phone}
                   </MDTypography>
                 </MDTypography>
               </MDBox>
@@ -107,7 +107,7 @@ function BillingInformation({UserListToCall}) {
                 <MDTypography variant="caption" color="text">
                   Email:&nbsp;&nbsp;&nbsp;
                   <MDTypography variant="caption" fontWeight="medium">
-                  {row.Email}
+                  {row.email}
                   </MDTypography>
                 </MDTypography>
               </MDBox>
