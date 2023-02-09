@@ -27,7 +27,6 @@ import Icon from "@mui/material/Icon";
 import MDButton from 'components/MDButton';
 import  MDInput  from 'components/MDInput';
 import ClientiInfo from "../../components/ClientiInfo"
-import ClientiInfoEdit from "../../components/ClientiInfoEdit"
 
 const  ClientePage = () =>  {
 // DETTAGLI  Cliente
@@ -190,7 +189,6 @@ const setDatiCliente = (data) => {
                     {tabValue === 2 && 
 
                     <MDBox>
-                    <ClientiInfoEdit Cliente={profiloCliente}  setCliente={setIdCliente} setTab={setTab}></ClientiInfoEdit>
                     </MDBox>
 
                     }

@@ -20,8 +20,7 @@ import Card from "@mui/material/Card";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import TableClienti from "components/TableClienti"
-import Device from "components/TwilioDevice";
+import TableClienti from "components/TableClienti";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -42,7 +41,7 @@ function Tables() {
       <DashboardNavbar />
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <Card>
               <MDBox
                 mx={2}
@@ -59,13 +58,11 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <TableClienti
-                />
-                <Device/>
+                <TableClienti />
               </MDBox>
             </Card>
           </Grid>
-        <Grid item xs={12}>
+          <Grid item xs={12}>
             <Card>
               <MDBox
                 mx={2}
