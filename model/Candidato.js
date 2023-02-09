@@ -12,11 +12,11 @@ const candidatoSchema = new Mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
   },
   telephone: {
-    type: Number,
+    type: String,
     required: true,
   },
   documents: [Document.schema],

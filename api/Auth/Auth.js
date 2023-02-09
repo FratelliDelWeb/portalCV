@@ -5,7 +5,7 @@ const jwtSecret =
   "4715aed3c946f7b0a38e6b534a9583628d84e96d10fbc04700770d572af3dce43625dd";
 
 exports.register = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   if (password.length < 6) {
     return res.status(400).json({ message: "Password less than 6 characters" });
   }
@@ -13,6 +13,7 @@ exports.register = async (req, res, next) => {
     await User.create({
       username,
       password: hash,
+      email: email,
     })
       .then((user) => {
         const maxAge = 3 * 60 * 60;
@@ -59,6 +60,9 @@ exports.login = async (req, res, next) => {
     } else {
       // comparing given password with hashed password
       bcrypt.compare(password, user.password).then(function (result) {
+        console.log(password);
+        console.log(user.password);
+        console.log(result);
         if (result) {
           const maxAge = 3 * 60 * 60;
           const token = jwt.sign(
@@ -80,7 +84,7 @@ exports.login = async (req, res, next) => {
         } else {
           res
             .status(400)
-            .json({ message: "Login not succesful", userRole: user.role });
+            .json({ message: "Login not successful", userRole: user.role });
         }
       });
     }
