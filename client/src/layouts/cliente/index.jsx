@@ -27,6 +27,7 @@ import Icon from "@mui/material/Icon";
 import MDButton from 'components/MDButton';
 import  MDInput  from 'components/MDInput';
 import ClientiInfo from "../../components/ClientiInfo"
+import ClientiInfoEdit from "../../components/ClientiInfoEdit"
 
 const  ClientePage = () =>  {
 // DETTAGLI  Cliente
@@ -84,14 +85,14 @@ console.log("valore");
 }
 // SET DATI CLIENTE
 const setDatiCliente = (data) => {
-    DatiCliente[0]= {
-      id: data._id,
-      name: data.name,
-      cognome:data.surname,
-      email:data.email,
-      cellulare:data.phone,
-      telefono:data.telephone,
-      curriculum:data.documents
+  DatiCliente[0]= {
+    id: data._id,
+    name: data.name,
+    cognome:data.surname,
+    email:data.email,
+    cellulare:data.phone,
+    telefono:data.telephone,
+    curriculum:data.documents
 }
 }
     return (
@@ -118,7 +119,7 @@ const setDatiCliente = (data) => {
                     <MDBox display="block" >
                     <MDBadge badgeContent="Lista iorio" container />
                     <MDTypography variant="h5"  fontWeight="bold" >
-                    Cliente: {row.name} - {row.cognome}
+                    Cliente: {row.name} {row.cognome} 
                     </MDTypography>
                     </MDBox>
                     <MDBox display="block" >
@@ -127,10 +128,10 @@ const setDatiCliente = (data) => {
 
 
 
-                    {tabValue < 1 && 
+                    {tabValue === 0 && 
 
                     <MDBox>
-                      <ClientiInfo Cliente={profiloCliente} setTab={setTab}></ClientiInfo>
+                      <ClientiInfo Cliente={profiloCliente}  setCliente={setIdCliente} setTab={setTab}></ClientiInfo>
                     </MDBox>
 
                     }
@@ -139,21 +140,7 @@ const setDatiCliente = (data) => {
                     {tabValue === 1 && 
 
                     <MDBox>
-                        <MDTypography mt={1}
-                          mb={1.5}
-                          variant="button" fontWight="bold"
-                          display="block"
-                          lineHeight={1.50}
-                          fontWeight="regular">
-                          Chiamate : 
-                        </MDTypography>
-                    </MDBox>
-
-                    }
-
-                    {tabValue === 2 && 
-
-                    <MDBox>
+                    <ClientiInfoEdit Cliente={profiloCliente}  setCliente={setIdCliente} setTab={setTab}></ClientiInfoEdit>
                     </MDBox>
 
                     }
@@ -180,15 +167,8 @@ const setDatiCliente = (data) => {
                     </Icon>
                   }
                 />
-                <Tab
-                  label="Chiamate"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      call
-                    </Icon>
-                  }
-                />
-                <Tab
+              
+                <Tab 
                   label="Modifica"
                   icon={
                     <Icon fontSize="small" sx={{ mt: -0.25 }}>

@@ -26,10 +26,26 @@ return(<MDBox>
   <Grid item xs={6} md={6} xl={6} >
   <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"   color="text">
+            ID:&nbsp;
+        </MDTypography>
+        <MDTypography variant="button">
+        {row.id}
+           </MDTypography>
+        </MDBox>
+  <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
+        <MDTypography variant="button" fontWight="bold"   color="text">
             Nome:&nbsp;
         </MDTypography>
         <MDTypography variant="button">
         {row.name}
+           </MDTypography>
+        </MDBox>
+        <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
+        <MDTypography variant="button" fontWight="bold"   color="text">
+            Cognome:&nbsp;
+        </MDTypography>
+        <MDTypography variant="button">
+        {row.cognome}
            </MDTypography>
         </MDBox>
         <MDBox mb={1} display="flex"  alignItems="center" lineHeight={0}>        
@@ -60,7 +76,7 @@ return(<MDBox>
            </MDTypography>
         </MDBox>
 
-        <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
+       {/*  <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"  alignItems="center" color="text">
             Indirizzo:&nbsp;
         </MDTypography>
@@ -68,9 +84,9 @@ return(<MDBox>
         {row.Indirizzo} - {row.Località} - {row.CAP} {row.Provincia}
 
            </MDTypography>
-        </MDBox>
+        </MDBox> */}
 
-    
+    {/* 
         <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"  alignItems="center" color="text">
             Contattabile:&nbsp;
@@ -78,17 +94,17 @@ return(<MDBox>
         <MDTypography variant="button">
         {row.Contattabile}
            </MDTypography>
-        </MDBox>
-        <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
+        </MDBox> */}
+     {/*    <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"  alignItems="center" color="text">
             idContratto:&nbsp;
         </MDTypography>
         <MDTypography variant="button">
         {row.ContattoID}
            </MDTypography>
-        </MDBox>
+        </MDBox> */}
        
-        <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
+      {/*   <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"  alignItems="center" color="text">
             Data di nascita:&nbsp;
         </MDTypography>
@@ -120,9 +136,9 @@ return(<MDBox>
         <MDTypography variant="button">
         {row.Fax}
         </MDTypography>
-        </MDBox>
+        </MDBox> */}
 
-
+{/* 
         <MDBox mb={1} display="flex" alignItems="center" lineHeight={0}>        
         <MDTypography variant="button" fontWight="bold"  alignItems="center" color="text">
             IBAN:&nbsp;
@@ -139,9 +155,9 @@ return(<MDBox>
         </MDTypography>
         <MDTypography variant="button">
         {row.ImportoRata}                                </MDTypography>
-        </MDBox>
+        </MDBox> */}
   </Grid>
-  <Grid item xs={6} md={6} xl={6} >
+  {/* <Grid item xs={6} md={6} xl={6} >
 
       
    
@@ -190,7 +206,7 @@ return(<MDBox>
 {row.TitoloAcc} 
 </MDTypography>
 
-    </Grid>
+    </Grid> */}
     <Grid item xs={12} display="flex" alignItems="flex-end" md={12} xl={12} >
 
       
