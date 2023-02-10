@@ -94,187 +94,144 @@ exports.search = async (req, res, next) => {
     const page = body.page;
     const limit = body.limit;
 
-    const query = {};
+    let getType = (field) => {
+      return Model.schema.paths[field].instance;
+    };
 
-    //Number
+    let query = {
+      $and: [],
+      $or: [],
+    };
+
     if (search) {
-      if (search.surname) {
-        const cognome = search.surname;
-        if (surname.operation) {
-          query.surname = {};
-          switch (surname.operation) {
-            case "not contains":
-              query.surname["$not"] = new RegExp(surname.value, "i");
-              break;
-            case "equal":
-              query.surname = surname.value;
-              break;
-            case "not equal":
-              query.surname["$ne"] = surname.value;
-              break;
-            case "is empty":
-              query.surname["$exists"] = true;
-              query.surname["$in"] = ["", null, 0];
-              break;
-            case "is not empty":
-              query.surname["$exists"] = true;
-              query.surname["$ne"] = "";
-              break;
-            default:
-              query.surname = new RegExp(surname.value, "i");
-              break;
-          }
-        }
-      }
+      for (let i = 0; i < Object.keys(search).length; i++) {
+        if (search[Object.keys(search)[i]]) {
+          const field = search[Object.keys(search)[i]];
+          const fieldName = Object.keys(search)[i];
+          const fieldType = getType(fieldName);
+          if (field.length > 0) {
+            switch (fieldType) {
+              case "Number":
+                for (let k = 0; k < field.length; k++) {
+                  let fieldMDB = {};
+                  /*                                     let equalsComparator = [];
+                                  let inequalsComparator = []; */
+                  switch (field[k].operation) {
+                    case "not contains":
+                      //Number can't
+                      break;
+                    case "equal":
+                      fieldMDB["$in"] = field[k].value;
+                      break;
+                    case "not equal":
+                      fieldMDB["$ne"] = field[k].value;
+                      break;
+                    case "is empty":
+                      fieldMDB["$exists"] = true;
+                      fieldMDB["$in"] = ["", null, 0];
+                      break;
+                    case "is not empty":
+                      fieldMDB["$exists"] = true;
+                      fieldMDB["$ne"] = "";
+                      break;
+                    case "greater than":
+                      fieldMDB["$gt"] = field[k].value;
+                      break;
+                    case "lower than":
+                      fieldMDB["$lt"] = field[k].value;
+                      break;
+                    case "lower than equal":
+                      fieldMDB["$lte"] = field[k].value;
+                      break;
+                    case "greater than equal":
+                      fieldMDB["$gte"] = field[k].value;
+                      break;
+                    default:
+                      fieldMDB = field[k].value;
+                      break;
+                  }
 
-      if (search.email) {
-        const email = search.email;
-        if (email.operation) {
-          query.email = {};
-          switch (email.operation) {
-            case "not contains":
-              query.email["$not"] = new RegExp(email.value, "i");
-              break;
-            case "equal":
-              query.email = email.value;
-              break;
-            case "not equal":
-              query.email["$ne"] = email.value;
-              break;
-            case "is empty":
-              query.email["$exists"] = true;
-              query.email["$in"] = ["", null, 0];
-              break;
-            case "is not empty":
-              query.email["$exists"] = true;
-              query.email["$ne"] = "";
-              break;
-            default:
-              query.email = new RegExp(email.value, "i");
-              break;
-          }
-        }
-      }
+                  const objectToPush = {};
+                  switch (field[k].logic) {
+                    case "or":
+                      objectToPush[fieldName] = fieldMDB;
+                      query["$or"].push(objectToPush);
+                      break;
+                    case "and":
+                      objectToPush[fieldName] = fieldMDB;
+                      query["$and"].push(objectToPush);
+                      break;
+                    default:
+                      objectToPush[fieldName] = fieldMDB;
+                      query["$or"].push(objectToPush);
+                      break;
+                  }
+                }
+                break;
+              case "String":
+                for (let k = 0; k < field.length; k++) {
+                  let fieldMDB = {};
+                  /*                                     let equalsComparator = [];
+                                  let inequalsComparator = []; */
+                  switch (field[k].operation) {
+                    case "not contains":
+                      fieldMDB["$not"] = new RegExp(field[k].value, "i");
+                      break;
+                    case "equal":
+                      fieldMDB = field[k].value;
+                      break;
+                    case "not equal":
+                      fieldMDB["$ne"] = field[k].value;
+                      break;
+                    case "is empty":
+                      fieldMDB["$exists"] = true;
+                      fieldMDB["$in"] = ["", null, 0];
+                      break;
+                    case "is not empty":
+                      fieldMDB["$exists"] = true;
+                      fieldMDB["$ne"] = "";
+                      break;
+                    default:
+                      fieldMDB["$in"] = new RegExp(field[k].value, "i");
+                      break;
+                  }
 
-      if (search.località) {
-        const località = search.località;
-        if (località.operation) {
-          query.località = {};
-          switch (località.operation) {
-            case "not contains":
-              query.località["$not"] = new RegExp(località.value, "i");
-              break;
-            case "equal":
-              query.località = località.value;
-              break;
-            case "not equal":
-              query.località["$ne"] = località.value;
-              break;
-            case "is empty":
-              query.località["$exists"] = true;
-              query.località["$in"] = ["", null, 0];
-              break;
-            case "is not empty":
-              query.località["$exists"] = true;
-              query.località["$ne"] = "";
-              break;
-            default:
-              query.località = new RegExp(località.value, "i");
-              break;
-          }
-        }
-      }
-
-      if (search.name) {
-        const nome = search.name;
-        if (nome.operation) {
-          query.name = {};
-          switch (nome.operation) {
-            case "not contains":
-              query.name["$not"] = new RegExp(name.value, "i");
-              break;
-            case "equal":
-              query.name = name.value;
-              break;
-            case "not equal":
-              query.name["$ne"] = name.value;
-              break;
-            case "is empty":
-              query.name["$exists"] = true;
-              query.name["$in"] = ["", null, 0];
-              break;
-            case "is not empty":
-              query.name["$exists"] = true;
-              query.name["$ne"] = "";
-              break;
-            default:
-              query.name = new RegExp(name.value, "i");
-              break;
-          }
-        }
-      }
-
-      if (search.phone) {
-        const phone = search.phone;
-        if (phone.operation) {
-          query.phone = {};
-          switch (phone.operation) {
-            case "not contains":
-              query.phone["$not"] = new RegExp(phone.value, "i");
-              break;
-            case "equal":
-              query.phone = phone.value;
-              break;
-            case "not equal":
-              query.phone["$ne"] = phone.value;
-              break;
-            case "is empty":
-              query.phone["$exists"] = true;
-              query.phone["$in"] = ["", null, 0];
-              break;
-            case "is not empty":
-              query.phone["$exists"] = true;
-              query.phone["$ne"] = "";
-              break;
-            default:
-              query.phone = new RegExp(phone.value, "i");
-              break;
-          }
-        }
-      }
-
-      if (search.telephone) {
-        const telephone = search.telephone;
-        if (telephone.operation) {
-          query.telephone = {};
-          switch (telephone.operation) {
-            case "not contains":
-              query.telephone["$not"] = new RegExp(telephone.value, "i");
-              break;
-            case "equal":
-              query.telephone = telephone.value;
-              break;
-            case "not equal":
-              query.telephone["$ne"] = telephone.value;
-              break;
-            case "is empty":
-              query.telephone["$exists"] = true;
-              query.telephone["$in"] = ["", null, 0];
-              break;
-            case "is not empty":
-              query.telephone["$exists"] = true;
-              query.telephone["$ne"] = "";
-              break;
-            default:
-              query.telephone = new RegExp(telephone.value, "i");
-              break;
+                  const objectToPush = {};
+                  switch (field[k].logic) {
+                    case "or":
+                      objectToPush[fieldName] = fieldMDB;
+                      query["$or"].push(objectToPush);
+                      break;
+                    case "and":
+                      objectToPush[fieldName] = fieldMDB;
+                      query["$and"].push(objectToPush);
+                      console.log("Sotto query");
+                      console.log(query);
+                      break;
+                    default:
+                      objectToPush[fieldName] = fieldMDB;
+                      query["$or"].push(objectToPush);
+                      break;
+                  }
+                }
+                break;
+              default:
+                break;
+            }
           }
         }
       }
     }
+    //Per non rompere la query
+    if (!query["$or"].length > 0) {
+      delete query["$or"];
+    }
 
-    // console.log(search.Denominazione)
+    if (!query["$and"].length > 0) {
+      delete query["$and"];
+    }
 
+    console.log(JSON.stringify(query));
     const data = await Model.find(query)
       .limit(limit * 1)
       .skip((page - 1) * limit);

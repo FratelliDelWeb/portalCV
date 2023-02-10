@@ -20,6 +20,18 @@ const candidatoSchema = new Mongoose.Schema({
     required: true,
   },
   documents: [Document.schema],
+  email: {
+    type: String,
+    required: true,
+  },
+  created_at: {
+    type: Date,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+  },
 });
 
 const Candidato = Mongoose.model("candidates", candidatoSchema);
