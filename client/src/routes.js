@@ -46,8 +46,9 @@ import SignUp from "layouts/authentication/sign-up";
 import Basic from "layouts/basic";
 import Admin from "layouts/admin";
 import Cliente from "layouts/cliente";
-import Home  from "layouts/sitoPubblico/home";
-import Contatti  from "layouts/sitoPubblico/contatti";
+import Home from "layouts/sitoPubblico/home";
+import Contatti from "layouts/sitoPubblico/contatti";
+import Candidati from "layouts/sitoPubblico/candidati";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -60,6 +61,14 @@ const routes = [
     icon: <Icon fontSize="small">home</Icon>,
     route: "/home",
     component: <Home />,
+  },
+  {
+    type: "title",
+    name: "Candidati",
+    key: "candidati",
+    icon: <Icon fontSize="small">home</Icon>,
+    route: "/candidati",
+    component: <Candidati />,
   },
   {
     type: "title",

@@ -3,7 +3,7 @@ import EmptyLayout from "../components/EmptyLayout";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-function Home() {
+function Candidati() {
   return (
     <EmptyLayout>
       <MDBox px={1} width="100%" height="100vh" mx="auto">
@@ -19,4 +19,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Candidati;

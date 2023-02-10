@@ -53,31 +53,36 @@ exports.update = async (req, res, next) => {
 exports.modify = async (req, res, next) => {
   const data = req.body;
   const id = data.id;
-  const field = data.field;
-  const fieldName = field.name;
-  const fromValue = field.from;
-  const toValue = field.to;
+  const fields = data.fields;
 
   if (id) {
     await Model.findById(id)
       .then((client) => {
-        console.log(client);
-        console.log("value : " + client[fieldName]);
-        if (client[fieldName] === fromValue) {
-          client[fieldName] = toValue;
-          client.save((err) => {
-            //Monogodb error checker
-            if (err) {
-              res
-                .status("400")
-                .json({ message: "An error occurred", error: err.message });
-              process.exit(1);
-            }
-            res.status("201").json({ message: "Update successful", client });
-          });
-        } else {
-          res.status(402).json({ message: "Not same value" });
+        for (field in fields) {
+          let fieldName = fields[field].name;
+          let fromValue = fields[field].from;
+          let toValue = fields[field].to;
+
+          if (client[fieldName] === fromValue) {
+            client[fieldName] = toValue;
+            console.log(client[fieldName]);
+          } else {
+            res
+              .status(402)
+              .json({ field: fieldName, message: "Not same value" });
+          }
         }
+        console.log(client);
+        client.save((err) => {
+          //Monogodb error checker
+          if (err) {
+            res
+              .status(400)
+              .json({ message: "An error occurred", error: err.message });
+            process.exit(1);
+          }
+          res.status(201).json({ message: "Update successful", client });
+        });
       })
       .catch((error) => {
         res
