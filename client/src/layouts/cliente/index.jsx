@@ -117,7 +117,7 @@ const setDatiCliente = (data) => {
                     alignItems="center"
                     justifyContent="space-between">
                     <MDBox display="block" >
-                    <MDBadge badgeContent="Lista iorio" container />
+                    <MDBadge badgeContent="Nuovo" container />
                     <MDTypography variant="h5"  fontWeight="bold" >
                     Cliente: {row.name} {row.cognome} 
                     </MDTypography>

@@ -157,56 +157,19 @@ return(<MDBox>
         {row.ImportoRata}                                </MDTypography>
         </MDBox> */}
   </Grid>
-  {/* <Grid item xs={6} md={6} xl={6} >
+  <Grid item xs={6} md={6} xl={6} >
 
       
    
-  <MDTypography display="block"   variant="button">
+  <MDTypography display="block" fontWeightBold variant="button">
+Scarica il Curriculum CV allegato dal candidato
+</MDTypography>
+      
+<MDButton color="light" onClick={() => setTab(null,2)} p={1} >
+<Icon>contact_page</Icon>&nbsp;  Scarica CV 
+</MDButton>
 
-{row.ImportoRataStorica}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-
-{row.ImportoSaldoAttualizzato}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-
-{row.ImportoSaldoContabile}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-
-{row.ImportoSaldoStorico}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-
-{row.Note}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.Operatore}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.PartitaIVA}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.Sesso}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.TipoCliente}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.TipoContoStorico}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.TipoPagamentoStorico}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.TipoRagioneSociale}
-</MDTypography>
-<MDTypography display="block"   variant="button">
-{row.TitoloAcc} 
-</MDTypography>
-
-    </Grid> */}
+    </Grid> 
     <Grid item xs={12} display="flex" alignItems="flex-end" md={12} xl={12} >
 
       
