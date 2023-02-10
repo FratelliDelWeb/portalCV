@@ -69,7 +69,7 @@ function Dashboard() {
                 count={variabile}
                 percentage={{
                   color: "success",
-                  amount: "+55%",
+                  amount: "",
                   label: "than lask week",
                 }}
               />
@@ -79,12 +79,12 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
                 icon="settings_accessibility"
-                title="Today's Users"
-                count="2,300"
+                title="Candidati scartati"
+                count="10"
                 percentage={{
                   color: "success",
-                  amount: "+3%",
-                  label: "than last month",
+                  amount: "",
+                  label: "Tutti i candidati scartati",
                 }}
               />
             </MDBox>
@@ -94,12 +94,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Revenue"
-                count="34k"
+                title="Candidature totali"
+                count="100"
                 percentage={{
                   color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
+                  amount: "",
+                  label: "Tutti i candidati",
                 }}
               />
             </MDBox>
@@ -109,12 +109,12 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="primary"
                 icon="person_add"
-                title="Clienti"
+                title="Nuove candidature"
                 count={variabile}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "UltimiAggiornati",
+                  label: "Ultimi ricevuti",
                 }}
               />
             </MDBox>

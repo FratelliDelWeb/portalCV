@@ -15,6 +15,7 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Card from "@mui/material/Card";
+import MDBadge from "components/MDBadge";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -34,7 +35,7 @@ function BillingInformation({UserListToCall}) {
     <Card id="delete-account">
       <MDBox pt={3} px={2}>
         <MDTypography variant="h6" fontWeight="medium">
-          Clienti da Chiamare oggi
+          Candidature ricevute
         </MDTypography>
       </MDBox>
     <MDBox pt={1} pb={2} px={2}>
@@ -53,7 +54,8 @@ function BillingInformation({UserListToCall}) {
 
             
             <MDBox width="100%" display="flex" flexDirection="column">
-              <MDBox
+{/*             <MDBadge badgeContent="NUOVO" container />
+ */}              <MDBox
                 display="flex"
                 justifyContent="space-between"
                 alignItems={{ xs: "flex-start", sm: "center" }}
@@ -74,18 +76,18 @@ function BillingInformation({UserListToCall}) {
                     </MDButton>
                   </MDBox>
                   <MDButton  component="a"
-            href={`clients/${row._id}`}
-            rel="noreferrer"
-            infoCliente={row}
-             variant="text" color={"dark"}>
+                  href={`clients/${row._id}`}
+                  rel="noreferrer"
+                  infoCliente={row}
+                  variant="text" color={"dark"}>
                     <Icon>edit</Icon>&nbsp;APRI
                   </MDButton>
-              </MDBox>
+                </MDBox>
 
 
             </MDBox>
 
-      <MDBox
+             <MDBox
                 display="flex"
                 justifyContent="space-between"
                 alignItems={{ xs: "flex-start", sm: "center" }}
@@ -96,9 +98,17 @@ function BillingInformation({UserListToCall}) {
 
               <MDBox mb={1} lineHeight={0}>
                 <MDTypography variant="caption" color="text">
-                  Telefono:&nbsp;&nbsp;&nbsp;
+                  Cellulare:&nbsp;&nbsp;&nbsp;
                   <MDTypography variant="caption" fontWeight="medium" textTransform="capitalize">
                     {row.phone}
+                  </MDTypography>
+                </MDTypography>
+              </MDBox>
+              <MDBox mb={1} lineHeight={0}>
+                <MDTypography variant="caption" color="text">
+                  Telefono:&nbsp;&nbsp;&nbsp;
+                  <MDTypography variant="caption" fontWeight="medium" textTransform="capitalize">
+                    {row.telephone}
                   </MDTypography>
                 </MDTypography>
               </MDBox>
@@ -112,36 +122,13 @@ function BillingInformation({UserListToCall}) {
                 </MDTypography>
               </MDBox>
 
-              <MDBox mb={1} lineHeight={0}>        
-              <MDTypography variant="caption" color="text">
-                Codice Cliente:&nbsp;&nbsp;&nbsp;
-                <MDTypography variant="caption" fontWeight="medium">
-                  {row.CodiceCliente}
-                </MDTypography>
-              </MDTypography>
-              </MDBox>
-              <MDBox mb={1} lineHeight={0}>        
-              <MDTypography variant="caption" color="text">
-                Lista Cliente:&nbsp;&nbsp;&nbsp;
-                <MDTypography variant="caption" fontWeight="medium">
-                  {row.Note}
-                </MDTypography>
-              </MDTypography>
-              </MDBox>
+             
               </MDBox>
 
               <MDBox display="block" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
-
-
-<MDBox mb={1} lineHeight={0}>        
-<MDTypography variant="caption" color="text">
-  Data e ora Richiamo :&nbsp;&nbsp;&nbsp;
-  <MDTypography variant="caption" fontWeight="medium">
-    {row.DataRichiamo}
-  </MDTypography>
-</MDTypography>
-</MDBox>
-</MDBox>
+             
+              
+              </MDBox>
 
 
               </MDBox>
