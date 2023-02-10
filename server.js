@@ -28,6 +28,7 @@ app.get("/api/users/:id", userAuth, usersRoute);
 app.get("/api/candidates", userAuth, candidatesRoute);
 app.get("/api/candidates/:id", userAuth, candidatesRoute);
 app.post("/api/search/candidates", userAuth, candidatesRoute);
+app.post("/api/candidates/modify", userAuth, candidatesRoute);
 
 /* app.get("/api/telefonate", userAuth, telefonateRoute);
 app.get("/api/telefonate/:id", userAuth, telefonateRoute);
