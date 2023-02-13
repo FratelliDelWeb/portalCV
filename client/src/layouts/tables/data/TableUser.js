@@ -79,10 +79,10 @@ export default function TableUser() {
       if (posts[x].Telefono1 !== "") {
         baseDatiUser[x] = {
           codiceCliente: posts[x].CodiceCliente,
-          name: posts[x].Denominazione,
+          name: posts[x].name,
           position: posts[x].Indirizzo + posts[x].Località,
-          telefono: posts[x].Telefono1,
-          Email: posts[x].Email,
+          telefono: posts[x].telephone,
+          Email: posts[x].email,
           Note: posts[x].Note,
         };
       }

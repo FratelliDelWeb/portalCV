@@ -20,10 +20,7 @@ export default function TableClienti() {
 
     const [search, setSearch] = useState({
         query: {
-            Telefono1: {
-                value: "",
-                operation: "is not empty"
-            }
+           
         },
         page: 1,
         limit: 50
@@ -49,10 +46,10 @@ export default function TableClienti() {
               if (data[x].Telefono1 !== "") {
                 baseDatiUser[x] = {
                   codiceCliente: data[x].CodiceCliente,
-                  name: data[x].Denominazione,
+                  name: data[x].name,
                   position: data[x].Indirizzo + data[x].Località,
-                  telefono: data[x].Telefono1,
-                  Email: data[x].Email,
+                  telefono: data[x].telephone,
+                  Email: data[x].email,
                   Note: data[x].Note,
                 };
               }
