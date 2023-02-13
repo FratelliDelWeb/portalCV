@@ -30,9 +30,9 @@ export default function TableClienti() {
         rows: [],
         page: 1,
         headers: [
-          { Header: "Codice Cliente", accessor: "codiceCliente", width: "10%" },
+          { Header: "id", accessor: "codiceCliente", width: "10%" },
           { Header: "Nome", accessor: "name", width: "13%" },
-          { Header: "Indirizzo", accessor: "position", width: "30%" },
+          { Header: "Cellulare", accessor: "position", width: "30%" },
           { Header: "Telefono", accessor: "telefono", width: "30%" },
           { Header: "Email", accessor: "Email", width: "30%" },
           { Header: "NOTE", accessor: "Note", width: "30%" },
@@ -45,9 +45,9 @@ export default function TableClienti() {
             for (let x = 0; x < data.length; x += 1) {
               if (data[x].Telefono1 !== "") {
                 baseDatiUser[x] = {
-                  codiceCliente: data[x].CodiceCliente,
+                  codiceCliente: data[x]._id,
                   name: data[x].name,
-                  position: data[x].Indirizzo + data[x].Località,
+                  phone: data[x].phone,
                   telefono: data[x].telephone,
                   Email: data[x].email,
                   Note: data[x].Note,
