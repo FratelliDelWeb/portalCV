@@ -121,8 +121,15 @@ function BillingInformation({UserListToCall}) {
                   </MDTypography>
                 </MDTypography>
               </MDBox>
-
-             
+            
+              <MDBox mb={1} lineHeight={0}>
+                <MDTypography variant="caption" color="text">
+                  Data candidatura:&nbsp;&nbsp;&nbsp;
+                  <MDTypography variant="caption" fontWeight="medium">
+                  {row.created_at}
+                  </MDTypography>
+                </MDTypography>
+              </MDBox>
               </MDBox>
 
               <MDBox display="block" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>

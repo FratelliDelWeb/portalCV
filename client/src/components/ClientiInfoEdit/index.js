@@ -12,7 +12,6 @@ import SelectProvincia from  'components/FormComponent/SelectProvincia';
 const ClientiInfoEdit = ({Cliente,setTab ,setCliente }) => {
     
 
-  console.log("Cliente ----" )
   console.log(Cliente)
 
  const [ClienteEdit, setClienteEdit] = useState({
@@ -22,6 +21,9 @@ const ClientiInfoEdit = ({Cliente,setTab ,setCliente }) => {
   Email: Cliente.user[0].email,
   Cellulare: Cliente.user[0].cellulare,
   Telefono: Cliente.user[0].telefono,
+  DataCandidatura : Cliente.user[0].created_at,
+  Status : Cliente.user[0].status
+
   });
 
 console.log(ClienteEdit)
@@ -31,7 +33,8 @@ console.log(ClienteEdit)
 
 
 const editCliente = async (eitData) => {
-  modifyClient(eitData)
+ modifyClient(eitData).then(setCliente(eitData))
+  
 }
 
 const setEditData = (Cliente ,ClienteEdit ) => {
@@ -40,30 +43,36 @@ const setEditData = (Cliente ,ClienteEdit ) => {
     "id": Cliente.user[0].id,
     "fields" : [
       {
-        "name" : "Nome",
+        "name" : "name",
         "from" : Cliente.user[0].name,
         "to" : ClienteEdit.Nome,
       },
       {
-      "name" : "Cognome",
+      "name" : "surname",
       "from" : Cliente.user[0].cognome,
       "to" : ClienteEdit.Cognome,
     },
     {
-      "name" : "Email",
+      "name" : "email",
       "from" : Cliente.user[0].email,
       "to" : ClienteEdit.Email,
     },
     {
-    "name" : "Cellulare",
+    "name" : "phone",
     "from" : Cliente.user[0].cellulare,
     "to" : ClienteEdit.Cellulare,
   },
   {
-    "name" : "Telefono",
+    "name" : "telephone",
     "from" : Cliente.user[0].telefono,
     "to" : ClienteEdit.Telefono,
+  },
+  {
+    "name" : "status",
+    "from" : Cliente.user[0].status,
+    "to" : "Wievd",
   }
+  
 
 
 
@@ -71,8 +80,8 @@ const setEditData = (Cliente ,ClienteEdit ) => {
   };
   console.log(eitData);
   editCliente(eitData);
-  setCliente();
-  setTab(null,0)
+/*  setCliente();
+ */  setTab(null,0)
   
 }
 
@@ -88,18 +97,17 @@ return(<MDBox>
             lineHeight={1.50}
             fontWeight="bold"
             >
-            Modifica le informazioni del Cliente
+            Modifica le informazioni del Candidato
         </MDTypography>
-        <Grid container spacing={1} >
-        <Grid item xs={6} md={6} xl={6} >
+       
+        <Grid item xs={12} md={12} xl={12} >
+                          
+                                <MDInput size="large"     variant="standard"   display="flex"  type="text" label="Nome"    onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, Nome: val });}} defaultValue={row.name} />  
+                             
+                                <MDInput type="text" variant="standard"   size="large"  display="flex"  label="Cognome"   onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, Cognome: val });}} defaultValue={row.cognome} />  
+                              
                                 <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
-                                <MDInput type="text" label="Nome"   onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, Nome: val });}} defaultValue={row.name} />  
-                                 </MDBox>
-                                 <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
-                                <MDInput type="text" label="Cognome"   onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, Cognome: val });}} defaultValue={row.cognome} />  
-                                 </MDBox>
-                                <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
-                                <MDInput type="email" label="Email"  onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, Email: val });}} defaultValue={row.email} />  
+                                <MDInput type="email" label="Email"     variant="standard" onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, Email: val });}} defaultValue={row.email} />  
                                  </MDBox>
                                
                                  <MDBox mb={1} display="block"  alignItems="center"lineHeight={0}>        
@@ -135,7 +143,8 @@ return(<MDBox>
                            
 
   </Grid>
-  <Grid item xs={6} md={6} xl={6} >
+    <Grid item xs={12} md={12} xl={12} >
+   
                         {/*   <MDBox mb={1} display="flex"  alignItems="center"lineHeight={0}>        
                                 <MDInput type="number" label="ImportoRataStorica"   onChange={(event) => { const val = event.target.value; setClienteEdit({ ...ClienteEdit, ImportoRataStorica: val });}} defaultValue={row.ImportoRataStorica} />  
                                  </MDBox>
@@ -177,7 +186,7 @@ return(<MDBox>
 
     <Grid item xs={12}  md={12} xl={12} >
 
-    <MDBox  display="flex"  alignItems="flex-end" justifyContent="flex-end" >
+    <MDBox  display="flex"  alignItems="flex-start" justifyContent="flex-start" >
       <MDBox  mr={1} >
       <MDButton    color="light"  onClick={() => seachCliente(searchData)}  >
       <Icon>trash</Icon>&nbsp;  Elimina Cliente
@@ -194,7 +203,7 @@ return(<MDBox>
     </Grid>
 
 
-</Grid>
+
 </MDBox>
         )
      })}

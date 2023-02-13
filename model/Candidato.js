@@ -19,16 +19,14 @@ const candidatoSchema = new Mongoose.Schema({
     type: String,
     required: true,
   },
-  documents: [Document.schema],
-  email: {
-    type: String,
-    required: true,
-  },
   created_at: {
     type: Date,
     required: true,
   },
   status: {
+    type: String,
+    required: true,
+  },email: {
     type: String,
     required: true,
   },

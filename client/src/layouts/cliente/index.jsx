@@ -36,7 +36,7 @@ const DatiCliente = []
 const [loading,setLoading] = useState(true);
 
   //set ID CLIENTE 
-  const [QueryClienteId,setQueryClienteId ] = useState("inzio")
+  const [QueryClienteId,setQueryClienteId ] = useState()
 
   //TAB 
   const [tabValue, setTabValue] = useState(0);
@@ -44,7 +44,11 @@ const [loading,setLoading] = useState(true);
     
     console.log(event);
     console.log(newValue);
-    setTabValue(newValue)};
+    setTabValue(newValue)
+    setIdCliente() 
+
+  
+  };
 
  
     
@@ -66,7 +70,12 @@ const [loading,setLoading] = useState(true);
     const idTokenQuery = window.location.pathname.substring(9);
     setQueryClienteId(idTokenQuery);
     console.log(QueryClienteId)
-    getClient();  
+    if(QueryClienteId){
+      getClient(); 
+    }else{
+      
+    }
+   
    }
    
    const getClient = async (profiloCliente) => {
@@ -92,7 +101,9 @@ const setDatiCliente = (data) => {
     email:data.email,
     cellulare:data.phone,
     telefono:data.telephone,
-    curriculum:data.documents
+    curriculum:data.documents,
+    created_at:data.created_at,
+    status:data.status
 }
 }
     return (
@@ -117,9 +128,9 @@ const setDatiCliente = (data) => {
                     alignItems="center"
                     justifyContent="space-between">
                     <MDBox display="block" >
-                    <MDBadge badgeContent="Nuovo" container />
+                    <MDBadge badgeContent={row.created_at === new Date() ? 'Nuovo' : row.status} container />
                     <MDTypography variant="h5"  fontWeight="bold" >
-                    Cliente: {row.name} {row.cognome} 
+                    Candidato: {row.name} {row.cognome} 
                     </MDTypography>
                     </MDBox>
                     <MDBox display="block" >
@@ -193,7 +204,9 @@ const setDatiCliente = (data) => {
 }
 ClientePage.propTypes = {
   
-    infoCliente: PropTypes.object
+    infoCliente: PropTypes.object,
+    getCandidato : PropTypes.func
+
   };
 
 
