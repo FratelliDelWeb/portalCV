@@ -35,7 +35,7 @@ import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 import React, { useState, useEffect } from "react";
-
+ 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
 
@@ -63,14 +63,14 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
+                color="success"
+                icon="badge"
+                title="Utenti Selezionati"
                 count={variabile}
                 percentage={{
                   color: "success",
                   amount: "",
-                  label: "than lask week",
+                  label: "Tutti i candidati in OK",
                 }}
               />
             </MDBox>
@@ -78,11 +78,12 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                icon="settings_accessibility"
+                icon="person_off"
                 title="Candidati scartati"
                 count="10"
+                color = "error"
                 percentage={{
-                  color: "success",
+                  color: "error",
                   amount: "",
                   label: "Tutti i candidati scartati",
                 }}
@@ -92,12 +93,12 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="success"
-                icon="store"
+                color="info"
+                icon="contact_page"
                 title="Candidature totali"
                 count="100"
                 percentage={{
-                  color: "success",
+                  color: "info",
                   amount: "",
                   label: "Tutti i candidati",
                 }}
@@ -107,12 +108,12 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
-                color="primary"
+                color="info"
                 icon="person_add"
                 title="Nuove candidature"
                 count={variabile}
                 percentage={{
-                  color: "success",
+                  color: "info",
                   amount: "",
                   label: "Ultimi ricevuti",
                 }}
